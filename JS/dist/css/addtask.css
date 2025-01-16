@@ -1,0 +1,242 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.add-task-button {
+  outline: none;
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.add-task-button:hover {
+  background: #222;
+  cursor: pointer;
+}
+
+#add-tasks {
+  margin: auto;
+  width: 30%;
+  text-align: start;
+  border-radius: 5%;
+}
+#add-tasks #form {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  justify-content: center;
+  margin: auto;
+  width: 70%;
+  color: white;
+  display: none;
+  box-shadow: 1px 1px 3px 1px gray;
+  padding: 10px;
+  background: #d2dae2;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border-radius: 5px;
+}
+#add-tasks #form .add-task-title {
+  text-align: center;
+  padding-bottom: 15px;
+  color: black;
+}
+#add-tasks #form label {
+  font-weight: 300;
+  color: black;
+}
+#add-tasks #form .task {
+  display: flex;
+  gap: 4px;
+  justify-content: start;
+  align-items: center;
+  margin-top: 10px;
+}
+#add-tasks #form .task #Task {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .task #Task:focus {
+  outline: none;
+  border-bottom: 1px solid gray;
+}
+#add-tasks #form #description1 {
+  margin-top: 10px;
+}
+#add-tasks #form #description1 #description {
+  background: #e5eef6;
+  outline: none;
+  border: none;
+  padding: 10px;
+  resize: vertical;
+  border-radius: 10px;
+}
+#add-tasks #form .date {
+  margin-top: 10px;
+}
+#add-tasks #form .date #date {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .starttime {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+#add-tasks #form .starttime #starttime {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .endtime {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  margin-top: 10px;
+}
+#add-tasks #form .endtime #endtime {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .importance {
+  margin-top: 10px;
+}
+#add-tasks #form .importance #high,
+#add-tasks #form .importance #low,
+#add-tasks #form .importance #medium {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .btns {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+#add-tasks #form .submit-btn {
+  outline: none;
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+#add-tasks #form .submit-btn:hover {
+  background: #222;
+  cursor: pointer;
+}
+#add-tasks #form .edit-submit-btn {
+  outline: none;
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+#add-tasks #form .edit-submit-btn:hover {
+  background: #222;
+  cursor: pointer;
+}
+#add-tasks #form .error {
+  color: red;
+}
+
+@media (max-width: 1024px) {
+  #add-tasks {
+    width: 50%;
+  }
+  #form {
+    width: 80%;
+    padding: 15px;
+  }
+  .task, .date, .starttime, .endtime, .importance {
+    flex-direction: column;
+  }
+  .starttime, .endtime {
+    gap: 10px;
+  }
+}
+@media (max-width: 768px) {
+  #add-tasks {
+    width: 70%;
+  }
+  #form {
+    width: 90%;
+  }
+  .task, .date, .starttime, .endtime, .importance {
+    flex-direction: column;
+  }
+  .starttime, .endtime {
+    gap: 15px;
+  }
+}
+@media (max-width: 480px) {
+  #add-tasks {
+    width: 90%;
+  }
+  #form {
+    width: 100%;
+    padding: 10px;
+  }
+  .task, .date, .starttime, .endtime, .importance {
+    flex-direction: column;
+  }
+  .starttime, .endtime {
+    gap: 5px;
+  }
+  .add-task-title {
+    font-size: 18px;
+  }
+  .btns {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .submit-btn {
+    width: 100%;
+  }
+  .edit-submit-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 320px) {
+  #add-tasks {
+    width: 100%;
+  }
+  #form {
+    width: 100%;
+    padding: 5px;
+  }
+  .task, .date, .starttime, .endtime, .importance {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .starttime, .endtime {
+    gap: 5px;
+  }
+  .submit-btn, .edit-submit-btn {
+    width: 100%;
+  }
+}/*# sourceMappingURL=addtask.css.map */

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily schedule planner</title>
+    <link rel="stylesheet" href="/dist/css/style.css" />
+    <link rel="stylesheet" href="/dist/css/title.css" />
+    <link rel="stylesheet" href="/dist/css/addtask.css" />
+    <link rel="stylesheet" href="/dist/css/showtask.css" />
+    <link rel="stylesheet" href="/dist/css/clearall.css" />
+    <link rel="stylesheet" href="/dist/css/sorting.css" />
+  </head>
+  <body>
+    <section id="heading">
+      <h2 class="main-title">Daily schedule planner</h2>
+    </section>
+    
+    <section id="filter">
+      <section>
+        <button class="add-task-button" >Add Task</button>
+      </section>
+      <select name="sorting" id="sorting" value="normal">
+        <option value="Normal" class="option">Normal</option>
+        <option value="Priority" class="option">Priority</option>
+        <option value="Day" class="option">Day</option>
+      </select>
+      
+    </section>
+    
+    <section id="add-tasks">
+      <form action="/index.html" id="form">
+        <h2 class="add-task-title">Add Task</h2>
+        <div class="task">
+          <label for="Task">Enter Task:</label>
+          <input
+            type="text"
+            name="Task"
+            id="Task"
+            placeholder="Enter Task"
+            value=""
+            required
+          />
+        </div>
+        <div id="description1">
+          <label for="description">Description:</label>
+          <textarea
+            name="description"
+            id="description"
+            rows="2"
+            cols="35"
+            placeholder="Enter Description About Task"
+          ></textarea>
+        </div>
+        <div class="date">
+          <label for="Date">Choose day:</label>
+          <input type="date" name="date" id="date" value="" required />
+        </div>
+
+        <div class="starttime">
+          <label for="starttime">Start time:</label>
+          <input type="time" name="starttime" id="starttime" />
+        </div>
+
+        <div class="endtime">
+          <label for="endtime">End time:</label>
+          <input type="time" name="endtime" id="endtime" />
+        </div>
+
+        <div class="importance">
+          <label for="importance">Importance Level:</label><br />
+
+          <label for="high">High</label>
+          <input type="radio" name="importance" id="high" value="High" />
+          <label for="medium">Medium</label>
+          <input type="radio" name="importance" id="medium" value="Medium" />
+          <label for="low">Low</label>
+          <input type="radio" name="importance" id="low" value="Low" />
+        </div>
+        <p id="error" class="error"></p>
+        <div class="btns">
+          <button type="submit" onclick="" class="submit-btn">Submit</button>
+          <button type="submit" onclick="" class="edit-submit-btn" disabled>
+            Edit
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section id="show-tasks">
+      <div class="main-card"></div>
+    </section>
+    <section id="clearall">
+      <button class="clearall-btn">Clear All</button>
+    </section>
+    <script src="/Scripts/index.js"></script>
+  </body>
+</html>
