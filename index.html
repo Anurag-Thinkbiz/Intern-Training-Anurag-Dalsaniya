@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First Page</title>
+    <link rel="stylesheet" href="CSS/navbar.css" />
+    <link rel="stylesheet" href="CSS/style.css" />
+    <link rel="stylesheet" href="/CSS/about.css" />
+    <link rel="stylesheet" href="/CSS/blog.css" />
+    <link rel="stylesheet" href="/CSS/hero.css" />
+    <link rel="stylesheet" href="/CSS/footer.css" />
+    <link rel="stylesheet" href="/CSS/product.css" />
+  </head>
+
+  <body>
+    <!-- navbar -->
+    <nav class="navbar">
+      <ul class="sidebar" id="sidebar">
+        <li onclick="hidesidebar()">
+          <a href="" class="close-button"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+              /></svg
+          ></a>
+        </li>
+        <li class="navlink"><a href="#about" class="navbar-a">about</a></li>
+        <li class="navlink"><a href="#blog" class="navbar-a">blog</a></li>
+        <li class="navlink">
+          <a href="#products" class="navbar-a">products</a>
+        </li>
+      </ul>
+      <ul class="menubar">
+        <li class="logo-li">
+          <a href="#" class="logo navbar-a"
+            >Tours<span class="logo-span"> .</span></a
+          >
+        </li>
+        <li class="hide-on-mobile">
+          <a id="linkabout" class="a navbar-a" href="#about">About</a>
+        </li>
+        <li class="hide-on-mobile">
+          <a id="linkblog" class="a navbar-a" href="#blog">Blog</a>
+        </li>
+        <li class="hide-on-mobile">
+          <a id="productlink" class="a navbar-a" href="#products">Products</a>
+        </li>
+        <li class="hide-on-mobile">
+          <a href="#hero" class="login-btn">Login</a>
+        </li>
+        <li class="menubutton" onclick="showsidebar()">
+          <a href="#"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#e8eaed"
+            >
+              <path
+                d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+              /></svg
+          ></a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- hero section -->
+    <div class="hero" id="hero">
+      <div class="container-hero">
+        <div class="a1-hero grid"><h2 class="content">Adventures</h2></div>
+        <div class="a2 grid"><h2 class="content">Sunsets</h2></div>
+        <div class="a3 grid"><h2 class="content">Mornings</h2></div>
+        <div class="a4 grid"><h2 class="content">Monsoons</h2></div>
+        <div class="a5 grid"><h2 class="content">Cities</h2></div>
+        <div class="a6">
+          <a class="find-more" href="#findmore">Find more</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- about section -->
+    <div id="about">
+      <h2 class="heading">About This website</h2>
+      <div class="about-content">
+        <div class="about-image"></div>
+        <div>
+          <p class="p-about">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
+            necessitatibus deleniti quae. Tenetur harum eaque blanditiis
+            dignissimos tempore earum quod consequuntur qui, laudantium
+            corrupti. At cum minima officiis accusamus dolores. Lorem ipsum
+            dolor sit, amet consectetur adipisicing elit. Deleniti quaerat id
+            quae quod a consequuntur asperiores neque reprehenderit vitae quis
+            facere quasi dignissimos, excepturi, illo similique incidunt sit sed
+            explicabo!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- blog section -->
+    <div id="blog">
+      <div><h2 class="heading">Blogs</h2></div>
+
+      <div class="blog-scroll">
+        <div class="a1">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+        </div>
+        <div class="a1">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+        </div>
+        <div class="a1">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+        </div>
+      </div>
+    </div>
+
+    <!-- card section -->
+    <div class="main-cards" id="products">
+      <div>
+        <h2 class="heading-products">Products</h2>
+      </div>
+      <div class="allcards">
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+            alt="Avatar"
+            style="width: 100%"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+            alt="Avatar"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/id/475/250/300" alt="Mountains"  class="avtar-img"/>
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+            class="avtar-img"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="avtar-img"
+            src="https://picsum.photos/id/475/250/300"
+            alt="Mountains"
+          />
+          <div class="container">
+            <h4><b>John Doe</b></h4>
+            <p>Architect & Engineer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">&copy; 2025 Tours.</footer>
+    <script src="js/index.js"></script>
+    <script src="js/object.js"></script>
+  </body>
+</html>
