@@ -4,8 +4,27 @@ const setLocatstorage = (key, value) => {
   const newValue = JSON.stringify(value);
   localStorage.setItem(key, newValue);
 };
-
 let allTasks = getLocalstorage("Task") || [];
+let form, cardContainer, clearAll, editIcon, sorting;
+(function () {
+  form = document.getElementById("form");
+  sorting = document.getElementById("sorting");
+  cardContainer = document.getElementsByClassName("main-card")[0];
+  clearAll = document.getElementsByClassName("clearall-btn")[0];
+  editIcon = document.getElementsByClassName("icon");
+  getLocalstorage("Task");
+  ToggleClearAllBtn();
+  showAllTasks(allTasks);
+})();
+
+
+function clearAllValueFromForm() {
+  document.getElementById("Task").value = "";
+  document.getElementById("starttime").value = undefined;
+  document.getElementById("endtime").value = " ";
+  document.getElementById("date").value = " ";
+  document.getElementById("description").value = "";
+}
 
 const generateId = () => {
   const allChar =
@@ -17,129 +36,108 @@ const generateId = () => {
   return id;
 };
 
+function hideModal() {
+  modal.style.display = "none";
+  form.style.display = "none";
+}
 function checkConcurrency(starttime, endtime, date, id) {
-  console.log("con");
-  console.log(id);
-
   for (const task of allTasks) {
-    if (
-      task.starttime <= starttime &&
-      starttime < task.endtime &&
-      task.date === date
-    ) {
-      console.log("first end");
-
+    if (task.date !== date) return false;
+    if (task.starttime <= starttime && starttime < task.endtime)
       return task.id !== id && true;
-    } else if (
-      endtime > task.startTime &&
-      endtime <= task.endTime &&
-      task.date === date
-    ) {
-      console.log("second");
-
+    else if (endtime > task.startTime && endtime <= task.endTime) return true;
+    else if (starttime <= task.startTime && endtime >= task.endTime)
       return true;
-    } else if (
-      starttime <= task.startTime &&
-      endtime >= task.endTime &&
-      task.date === date
-    ) {
-      console.log("third");
-      return true;
-    }
   }
   return false;
 }
 function getTimeinHourMinFormat(startTime, endTime) {
   const [startHour, startMin] = startTime.split(":").map(Number);
   const [endHour, endMin] = endTime.split(":").map(Number);
-
-  const start_Time = startHour * 60 + startMin;
-  const end_Time = endHour * 60 + endMin;
-
-  let duration = end_Time - start_Time;
-
+  let duration = endHour * 60 + endMin - (startHour * 60 + startMin);
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
-
   return `${durationHours}h-${durationMinutes}m`;
 }
-function addTask(e) {
-  if (allTasks.length <= 0) {
+
+function ToggleClearAllBtn() {
+  if (allTasks.length <= 0)
     document.getElementsByClassName("clearall-btn")[0].style.display = "none";
-  }else{
+  else
     document.getElementsByClassName("clearall-btn")[0].style.display = "block";
-  }
+}
+
+const priorityMap = {
+  High: 1,
+  Medium: 2,
+  Low: 3,
+};
+function getTimeInMinutes(time) {
+  const [hour, min] = time.split(":");
+  return hour * 60 + min;
+}
+function addTask(e, check) {
+  ToggleClearAllBtn();
+
+  check !== "Edit"
+    ? (document.getElementsByClassName("submit-btn")[0].style.display = "block")
+    : (document.getElementsByClassName("submit-btn")[0].style.display = "none");
   try {
     let newTask = {};
     const id = generateId();
     newTask.id = id;
     for (let i = 0; i < e.target.length; i++) {
-      if (e.target[i].name === "date") {
-        if (
-          e.target[i].value == undefined ||
-          e.target[i].value == null ||
-          e.target[i].value == "" ||
-          e.target[i].value == " "
-        )
-          throw Error("Enter Task");
-        newTask.date = e.target[i].value;
-      } else if (e.target[i].name === "Task") {
-        if (
-          e.target[i].value == undefined ||
-          e.target[i].value == null ||
-          e.target[i].value == "" ||
-          e.target[i].value == " "
-        )
-          throw Error("Enter Task");
-        newTask.task = e.target[i].value;
-      } else if (e.target[i].name === "importance")
-        if (e.target[i].checked) {
-          console.log(e.target[i].checked);
+      switch (e.target[i].name) {
+        case "date":
+          if (!e.target[i].value) throw Error("Enter date");
+          newTask.date = e.target[i].value;
+          break;
+        case "Task":
+          if (!e.target[i].value) throw Error("Enter Task");
+          newTask.task = e.target[i].value;
+          break;
+        case "importance":
+          if (e.target[i].checked) newTask.importanceLevel = e.target[i].value;
+          else newTask.importanceLevel = "Medium";
+          break;
+        case "starttime":
+          newTask.starttime = e.target[i].value;
+          break;
+        case "endtime":
+          newTask.endtime = e.target[i].value;
+          break;
+        case "description":
+          if (!e.target[i].value) throw Error("Enter Description");
+          newTask.description = e.target[i].value;
+          break;
 
-          newTask.importanceLevel = e.target[i].value;
-        } else {
-          newTask.importanceLevel = "Medium";
-        }
-      else if (e.target[i].name === "starttime")
-        newTask.starttime = e.target[i].value;
-      else if (e.target[i].name === "endtime")
-        newTask.endtime = e.target[i].value;
-      else if (e.target[i].name === "description")
-        newTask.description = e.target[i].value;
+        default:
+          break;
+      }
     }
     if (
       getTimeInMinutes(newTask.endtime) - getTimeInMinutes(newTask.starttime) <=
       0
-    ) {
+    )
       throw Error("Please select valid time");
-    }
-
-    const curtime = new Date();
-    const currentTimeStr =
-      curtime.getHours().toString().padStart(2, "0") +
-      ":" +
-      curtime.getMinutes().toString().padStart(2, "0");
-    if (newTask.starttime <= currentTimeStr)
-      throw Error("You can start Task after time");
 
     let curDate = new Date().toISOString().split("T")[0];
+
     if (newTask.date < curDate) throw Error("You cannot add previos day");
-    if (checkConcurrency(newTask.starttime, newTask.endtime, newTask.date)) {
+    if (curDate >= newTask.date && newTask.starttime <= getCurrentTimeStr())
+      throw Error("You cannot start Task after time");
+    if (checkConcurrency(newTask.starttime, newTask.endtime, newTask.date))
       throw Error("Task Already exists");
-    }
 
     newTask.isCompleted = false;
     newTask.isMissed = false;
-    document.getElementById("Task").value = "";
-    document.getElementById("starttime").value = "00:00";
-    document.getElementById("endtime").value = "00:00";
-    document.getElementById("date").value = "yyyy-MM-dd";
-    document.getElementById("description").value = "";
-    console.log(newTask);
+    clearAllValueFromForm();
 
     allTasks.push(newTask);
     setLocatstorage("Task", allTasks);
     showAllTasks(allTasks);
+    hideModal();
+    clearAll.style.display = "block";
   } catch (error) {
     document.getElementById("error").innerText = error.message;
     setTimeout(() => (document.getElementById("error").innerText = " "), 3000);
@@ -155,56 +153,65 @@ document
         : "none";
   });
 
-const changeBackground = (priority, endTask) => {
-  const curtime = new Date();
-  const currentTimeStr =
-    curtime.getHours().toString().padStart(2, "0") +
-    ":" +
-    curtime.getMinutes().toString().padStart(2, "0");
-  if (endTask < currentTimeStr) return "red";
+function changeBackground (priority, endTask)  {
+  if (endTask < getCurrentTimeStr()) return "red";
   else {
     switch (priority) {
       case "High":
         return "#A3D8FF";
-
       case "Medium":
         return "#64B5F6";
-
       default:
         return "#1976D2";
     }
   }
 };
 
-let form, cardContainer, clearAll, editIcon, sorting;
-(function () {
-  form = document.getElementById("form");
-  sorting = document.getElementById("sorting");
-  cardContainer = document.getElementsByClassName("main-card")[0];
-  clearAll = document.getElementsByClassName("clearall-btn")[0];
-  editIcon = document.getElementsByClassName("icon");
-  getLocalstorage("Task");
-  if (allTasks.length <= 0) {
-    document.getElementsByClassName("clearall-btn")[0].style.display = "none";
-  }else{
-    document.getElementsByClassName("clearall-btn")[0].style.display = "block";
-  }
-  showAllTasks(allTasks);
-})();
 
+let modal = document.getElementById("myModal");
+let btn = document.querySelector(".add-task-button");
+let span = document.querySelector(".close");
+let closeBtn = document.querySelector(".close-btn");
+
+let TempFormData;
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  addTask(e);
+  TempFormData = e;
+  addTask(e, e.submitter.innerText);
 });
+
+document
+  .getElementsByClassName("edit-submit-btn")[0]
+  .addEventListener("click", (e) => {
+    addTask(TempFormData, e.submitter.innerText);
+  });
+
+btn.onclick = function openform() {
+  modal.style.display = "block";
+};
+span.onclick = function () {
+  hideModal();
+};
+clearAll.addEventListener("click", () => {
+  localStorage.removeItem("Task");
+  allTasks = [];
+  showAllTasks(allTasks);
+  clearAll.style.display = "none";
+});
+
+span.onclick = function () {
+  clearAllValueFromForm();
+  document.getElementsByClassName("submit-btn")[0].style.display = "block";
+  document.getElementsByClassName("edit-submit-btn")[0].style.display = "none";
+  document.getElementsByClassName("add-task-title")[0].textContent = "Add Task";
+  hideModal();
+};
 
 function showAllTasks(data) {
   cardContainer.innerHTML = " ";
-  // console.log(data?.length);
-
   for (let i = 0; i < data?.length; i++) {
     let duration = getTimeinHourMinFormat(data[i].starttime, data[i].endtime);
     const newDiv = document.createElement("div");
-    // newDiv.classList.add("card");
     newDiv.innerHTML = `
           <div class="card" style="background:${changeBackground(
             data[i].importanceLevel,
@@ -240,8 +247,6 @@ function showAllTasks(data) {
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
     </svg>`
       }
-
-  
       <svg
         fill="none"
         height="24"
@@ -289,30 +294,35 @@ function showAllTasks(data) {
   }
 }
 
-clearAll.addEventListener("click", () => {
-  localStorage.removeItem("Task");
-  document.getElementById("Task").value = "";
-  document.getElementById("starttime").value = "00:00";
-  document.getElementById("endtime").value = "00:00";
-  document.getElementById("date").value = "1970-01-01";
-  allTasks = [];
-  showAllTasks(allTasks);
-});
-
-const getTaskFromStorage = (id) => {
+function getTaskFromStorage(id) {
   return allTasks.filter((ele) => ele.id === id);
-};
+}
 
-const getIndexFromID = (id) => {
+function getIndexFromID(id) {
   return allTasks.findIndex((ele) => ele.id === id);
-};
+}
 
+function getCurrentTimeStr() {
+  const currentTime = new Date();
+  const currentTimeStr =
+    currentTime.getHours().toString().padStart(2, "0") +
+    ":" +
+    currentTime.getMinutes().toString().padStart(2, "0");
+  return currentTimeStr;
+}
+
+function getImportanceLevelValue(priority, tempObject) {
+  tempObject.importanceLevel = document.getElementById(priority).value;
+  document.getElementById(priority).checked = false;
+}
 function editTask(e) {
   const [id1, ID] = e.currentTarget.id.split("-");
+  modal.style.display = "block";
+  form.style.display = "block";
   const tempObj = getTaskFromStorage(ID);
-  console.log(ID);
   const eleID = ID;
-
+  document.getElementsByClassName("add-task-title")[0].textContent =
+    "Edit Task";
   document.getElementById("date").value = tempObj[0].date;
   document.getElementById("starttime").value = tempObj[0].starttime;
   document.getElementById("endtime").value = tempObj[0].endtime;
@@ -326,18 +336,11 @@ function editTask(e) {
   else document.getElementById("high").checked = true;
 
   const editButton = document.getElementsByClassName("edit-submit-btn")[0];
-  editButton.disabled = false;
-  const submitButton = document.getElementsByClassName("submit-btn")[0];
-  submitButton.disabled = true;
-  if (submitButton.disabled || editButton.disabled) {
-    submitButton.style.background = "#222";
-    submitButton.style.color = "#333";
-  }
-
+  editButton.style.display = "block";
+  document.getElementsByClassName("submit-btn")[0].style.display = "none";
   editButton.addEventListener("click", function newEdit() {
     try {
       const index = getIndexFromID(eleID);
-      console.log(index + "edit first");
       const tempObject = {
         task: document.getElementById("Task").value,
         description: document.getElementById("description").value,
@@ -347,52 +350,24 @@ function editTask(e) {
         importanceLevel: "",
         id: eleID,
       };
-      if (document.getElementById("low").checked) {
-        tempObject.importanceLevel = document.getElementById("low").value;
-        document.getElementById("low").checked = false;
-      } else if (document.getElementById("high").checked) {
-        tempObject.importanceLevel = document.getElementById("high").value;
-        document.getElementById("high").checked = false;
-      } else {
-        tempObject.importanceLevel = document.getElementById("medium").value;
-        document.getElementById("medium").checked = false;
-      }
-      document.getElementsByClassName("submit-btn")[0].disabled = false;
-      document.getElementsByClassName("edit-submit-btn")[0].disabled = true;
+      if (document.getElementById("low").checked)
+        getImportanceLevelValue("low", tempObject);
+      else if (document.getElementById("high").checked)
+        getImportanceLevelValue("high", tempObject);
+      else getImportanceLevelValue("medium", tempObject);
 
       let curDate = new Date().toISOString().split("T")[0];
-      if (submitButton.disabled === false || editButton.disabled === false) {
-        submitButton.style.background = "#000";
-        submitButton.style.color = "#fff";
-      }
-      const curtime = new Date();
-      const currentTimeStr =
-        curtime.getHours().toString().padStart(2, "0") +
-        ":" +
-        curtime.getMinutes().toString().padStart(2, "0");
-      if (tempObject.starttime <= currentTimeStr)
-        throw Error("You cannot start Task after time");
 
       if (
-        tempObject.task == undefined ||
-        tempObject.task == null ||
-        tempObject.task == "" ||
-        tempObject.task == " "
+        curDate <= tempObject.date &&
+        tempObject.starttime <= getCurrentTimeStr()
       )
-        throw Error("Enter Task");
-      if (
-        tempObject.description == undefined ||
-        tempObject.description == null ||
-        tempObject.description == "" ||
-        tempObject.description == " "
-      )
+        throw Error("You cannot start Task after time");
+
+      if (!tempObject.task || tempObject.task == " ") throw Error("Enter Task");
+      if (!tempObject.description || tempObject.description == " ")
         throw Error("Enter description");
-      if (
-        tempObject.date == undefined ||
-        tempObject.date == null ||
-        tempObject.date == "" ||
-        tempObject.date == " "
-      )
+      if (!tempObject.date || tempObject.date == " ")
         throw Error("Enter valid date");
 
       if (tempObject.date < curDate)
@@ -402,9 +377,8 @@ function editTask(e) {
         getTimeInMinutes(tempObject.endtime) -
           getTimeInMinutes(tempObject.starttime) <=
         0
-      ) {
+      )
         throw Error("Please select valid time");
-      }
 
       if (
         checkConcurrency(
@@ -413,39 +387,36 @@ function editTask(e) {
           tempObject.date,
           tempObject.id
         )
-      ) {
+      )
         throw Error("Task Already exists");
-      }
+
       allTasks[index] = tempObject;
-      document.getElementById("Task").value = "";
-      document.getElementById("description").value = "";
-      document.getElementById("starttime").value = "00:00";
-      document.getElementById("endtime").value = "00:00";
-      document.getElementById("date").value = "yyyy-MM-dd";
 
       setLocatstorage("Task", allTasks);
       showAllTasks(allTasks);
+      hideModal();
+
+      document.getElementById("medium").checked = true;
+      clearAllValueFromForm();
+      document.getElementsByClassName("add-task-title")[0].textContent =
+        "Add Task";
+      document.getElementsByClassName("edit-submit-btn")[0].style.display =
+        "none";
+      document.getElementsByClassName("submit-btn")[0].style.display = "block";
       editButton.removeEventListener("click", newEdit);
     } catch (error) {
+      document.getElementsByClassName("edit-submit-btn")[0].style.display =
+        "block";
+      document.getElementsByClassName("submit-btn")[0].style.display;
       document.getElementById("error").innerText = error.message;
       setTimeout(() => (document.getElementById("error").innerText = ""), 3000);
     }
   });
 }
 
-const priorityMap = {
-  High: 1,
-  Medium: 2,
-  Low: 3,
-};
-function getTimeInMinutes(time) {
-  const [hour, min] = time.split(":");
-  return hour * 60 + min;
-}
 sorting.addEventListener("change", function filterChange() {
   const filterValue = sorting.value;
   const tempTask = allTasks;
-  console.log(filterValue);
 
   switch (filterValue) {
     case "Priority":
@@ -457,9 +428,8 @@ sorting.addEventListener("change", function filterChange() {
       break;
 
     case "Day":
-      console.log("day");
+      "day";
       tempTask.sort((ele1, ele2) => new Date(ele1.date) - new Date(ele2.date));
-      // console.log(tempTask);
       showAllTasks(tempTask);
       break;
 
@@ -479,44 +449,20 @@ function deleteTask(e) {
   setLocatstorage("Task", allTasks);
   showAllTasks(allTasks);
 
-  document.getElementById("Task").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("starttime").value = "00:00";
-  document.getElementById("endtime").value = "00:00";
-  document.getElementById("date").value = "yyyy-MM-dd";
-
-  const submitButton = (document.getElementsByClassName(
-    "submit-btn"
-  )[0].disabled = false);
-  const editButton = (document.getElementsByClassName(
-    "edit-submit-btn"
-  )[0].disabled = true);
-
-  if (submitButton.disabled === false || editButton.disabled === false) {
-    submitButton.style.background = "#000";
-    submitButton.style.color = "#fff";
-  }
-  if (allTasks.length <= 0) {
+  if (allTasks.length <= 0)
     document.getElementsByClassName("clearall-btn")[0].style.display = "none";
-  }
 }
 function completeTask(e) {
   const [id1, ID] = e.currentTarget.id.split("-");
   const ele = getIndexFromID(ID);
-
   const tempObj = allTasks[ele];
-
   tempObj.isCompleted = true;
-
-  console.log(ID);
-
   if (tempObj.isCompleted) {
     document.getElementById(`task-name1-${ID}`).style.textDecoration =
       "line-through";
     document.getElementById(`complete-${ID}`).style.display = "none";
     document.getElementById(`edit-${ID}`).style.display = "none";
   }
-
   allTasks[ele] = tempObj;
   setLocatstorage("Task", allTasks);
 }

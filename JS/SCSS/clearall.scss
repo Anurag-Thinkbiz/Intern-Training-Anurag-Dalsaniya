@@ -1,13 +1,10 @@
-@import 'style';
-#clearall{
-    padding: $padding-left;
-    
-    
-    .clearall-btn{
-        @include button;
-        margin: auto;
-        display: flex;
-    }
+@import "style";
+#clearall {
+  padding: $padding-left;
 
-     
+  .clearall-btn {
+    @include button;
+    margin: auto;
+    display: flex;
   }
+}

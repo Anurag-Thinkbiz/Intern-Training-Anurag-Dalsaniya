@@ -15,83 +15,93 @@
     <section id="heading">
       <h2 class="main-title">Daily schedule planner</h2>
     </section>
-    
+
     <section id="filter">
       <section>
-        <button class="add-task-button" >Add Task</button>
+        <button class="add-task-button">Add Task</button>
       </section>
       <select name="sorting" id="sorting" value="normal">
         <option value="Normal" class="option">Normal</option>
         <option value="Priority" class="option">Priority</option>
         <option value="Day" class="option">Day</option>
       </select>
-      
     </section>
-    
+
     <section id="add-tasks">
-      <form action="/index.html" id="form">
-        <h2 class="add-task-title">Add Task</h2>
-        <div class="task">
-          <label for="Task">Enter Task:</label>
-          <input
-            type="text"
-            name="Task"
-            id="Task"
-            placeholder="Enter Task"
-            value=""
-            required
-          />
-        </div>
-        <div id="description1">
-          <label for="description">Description:</label>
-          <textarea
-            name="description"
-            id="description"
-            rows="2"
-            cols="35"
-            placeholder="Enter Description About Task"
-          ></textarea>
-        </div>
-        <div class="date">
-          <label for="Date">Choose day:</label>
-          <input type="date" name="date" id="date" value="" required />
-        </div>
+      <div class="modal" id="myModal">
+        <div class="modal-content">
+          <form action="/index.html" id="form">
+            <span class="close">&times;</span>
+            <h2 class="add-task-title">Add Task</h2>
+            <div class="task">
+              <label for="Task">Enter Task:</label>
+              <input
+                type="text"
+                name="Task"
+                id="Task"
+                placeholder="Enter Task"
+                value=""
+                required
+              />
+            </div>
+            <div id="description1">
+              <label for="description">Description:</label>
+              <textarea
+                name="description"
+                id="description"
+                rows="2"
+                cols="35"
+                placeholder="Enter Description About Task"
+              ></textarea>
+            </div>
+            <div class="date">
+              <label for="Date">Choose day:</label>
+              <input type="date" name="date" id="date" value="" required />
+            </div>
 
-        <div class="starttime">
-          <label for="starttime">Start time:</label>
-          <input type="time" name="starttime" id="starttime" />
-        </div>
+            <div class="starttime">
+              <label for="starttime">Start time:</label>
+              <input type="time" type="time" name="starttime" id="starttime" />
+            </div>
 
-        <div class="endtime">
-          <label for="endtime">End time:</label>
-          <input type="time" name="endtime" id="endtime" />
-        </div>
+            <div class="endtime">
+              <label for="endtime">End time:</label>
+              <input type="time" name="endtime" id="endtime" />
+            </div>
 
-        <div class="importance">
-          <label for="importance">Importance Level:</label><br />
+            <div class="importance">
+              <label for="importance">Importance Level:</label><br />
 
-          <label for="high">High</label>
-          <input type="radio" name="importance" id="high" value="High" />
-          <label for="medium">Medium</label>
-          <input type="radio" name="importance" id="medium" value="Medium" />
-          <label for="low">Low</label>
-          <input type="radio" name="importance" id="low" value="Low" />
+              <label for="high">High</label>
+              <input type="radio" name="importance" id="high" value="High" />
+              <label for="medium">Medium</label>
+              <input
+                type="radio"
+                name="importance"
+                id="medium"
+                value="Medium"
+                checked
+              />
+              <label for="low">Low</label>
+              <input type="radio" name="importance" id="low" value="Low" />
+            </div>
+            <p id="error" class="error"></p>
+            <div class="btns">
+              <button type="submit" onclick="" class="submit-btn">
+                Submit
+              </button>
+              <button class="edit-submit-btn">Edit</button>
+            </div>
+          </form>
         </div>
-        <p id="error" class="error"></p>
-        <div class="btns">
-          <button type="submit" onclick="" class="submit-btn">Submit</button>
-          <button type="submit" onclick="" class="edit-submit-btn" disabled>
-            Edit
-          </button>
-        </div>
-      </form>
+      </div>
     </section>
 
     <section id="show-tasks">
       <div class="main-card"></div>
     </section>
     <section id="clearall">
-      <button class="clearall-btn">Clear All</button>
+      <button class="clearall-btn" id="clearall-btn">Clear All</button>
     </section>
     <script src="/Scripts/index.js"></script>
   </body>
