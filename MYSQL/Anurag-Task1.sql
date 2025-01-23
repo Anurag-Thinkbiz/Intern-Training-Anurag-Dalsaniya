@@ -15,6 +15,8 @@ CREATE TABLE Employee(
   Address_city VARCHAR(50) NOT NULL
 );
 
+ALTER TABLE employee ADD CONSTRAINT FOREIGN KEY (Dept_no) REFERENCES employee(Emp_id);
+DROP TABLE employee;
 CREATE TABLE Department(
  Dept_no INT AUTO_INCREMENT PRIMARY KEY,
  Name VARCHAR(50),
@@ -106,13 +108,10 @@ WHERE D.Name='First Bank Corporation' AND E.Salary>10000 ;
 #2.Select the employees in department 30
 SELECT *
 FROM Employee E
-INNER JOIN Department D
-ON D.Dept_no=E.Dept_no
 WHERE D.Dept_no=30;
 
 #3.List the names, numbers and departments of all clerks.
-
-SELECT E.Emp_id,E.Name
+SELECT E.Name,E.Dept_no
 FROM Employee E
 INNER JOIN Department D
 ON D.Dept_no=E.Dept_no
@@ -130,27 +129,21 @@ WHERE D.Dept_no > 20;
 
 UPDATE Employee SET Commision=60000 WHERE Salary=50000;
 
-SELECT E1.Name
-FROM Employee E1
-JOIN Employee E2
-ON E1.Emp_id=E2.Emp_id
-WHERE E1.Commision > E2.Salary;
+SELECT Name
+FROM Employee 
+WHERE Commision > Salary;
 
 UPDATE Employee SET Commision=50000 WHERE Salary=60000;
 
 #6.Find employees whose commission is greater than 60 % of their salaries.
-SELECT E1.Name
-FROM Employee E1
-JOIN Employee E2
-ON E1.Emp_id=E2.Emp_id
-WHERE E1.Commision > E2.Salary*0.6; 
+SELECT Name
+FROM Employee 
+WHERE Commision > Salary*0.6;
  
 #7.List name, job and salary of all employees in department 20 who earn more than 2000/-.
-SELECT E.Name,E.Job_title,E.Salary
-FROM Employee E
-JOIN Department D
-ON E.Dept_no=D.Dept_no
-WHERE E.Salary > 2000 AND D.Dept_no=20; 
+SELECT Name,Job_title,Salary
+FROM Employee 
+WHERE Salary > 2000 AND Dept_no=20; 
 
 #8.Find all salesmen in department 30 whose salary is greater than 1500/-.
 -- UPDATE employee SET Job_title='Salesmen' WHERE Job_title='Systems Architect';
