@@ -157,36 +157,36 @@ WHERE Salary > 1500 AND Dept_no=30 AND Job_title='Salesmen';
 #9.Find all employees whose designation is either manager or president.
 SELECT Name,Salary,Job_title
 FROM Employee 
-WHERE Job_title REGEXP 'manager' OR Job_title REGEXP 'president'; 
+WHERE Job_title LIKE 'manager' OR Job_title LIKE 'president'; 
 
 
 #10.Find all managers who are not in department 30.
 SELECT Name,Job_title
 FROM Employee 
-WHERE  Job_title REGEXP 'manager' AND Dept_no!=30; 
+WHERE  Job_title LIKE 'manager' AND Dept_no!=30; 
 
 
 #11.Find all the details of managers and clerks in dept 10.
 SELECT *
 FROM Employee 
-WHERE  (Job_title REGEXP 'manager' OR Job_title REGEXP 'Clerk') AND Dept_no=10; 
+WHERE  (Job_title LIKE 'manager' OR Job_title LIKE 'Clerk') AND Dept_no=10; 
 
 #12.Find the details of all the managers (in any dept) and clerks in dept 20.
 SELECT *
 FROM Employee 
-WHERE  Job_title REGEXP 'manager' OR (Job_title REGEXP 'Clerk' AND Dept_no=20); 
+WHERE  Job_title LIKE 'manager' OR (Job_title LIKE 'Clerk' AND Dept_no=20); 
 
 #13.Find the details of all the managers in dept. 10 and all clerks in dept 20 and all employees who are neither managers nor clerks but whose salary is more than or equal to 2000/-.
 SELECT *
 FROM Employee 
-WHERE  (Job_title REGEXP 'manager' AND Dept_no=10) 
- OR (Job_title NOT REGEXP 'Clerk' AND Dept_no=20) 
- OR (Job_title NOT REGEXP 'manager' AND Job_title regexp 'Clerk' AND Salary>2000) ; 
+WHERE  (Job_title LIKE 'manager' AND Dept_no=10) 
+ OR (Job_title NOT LIKE 'Clerk' AND Dept_no=20) 
+ OR (Job_title NOT LIKE 'manager' AND Job_title NOT LIKE 'Clerk' AND Salary>2000) ; 
 
 #14.Find the names of anyone in dept. 20 who is neither manager nor clerk.
 SELECT * 
 FROM employee 
-WHERE Dept_no=20 AND (Job_title NOT REGEXP 'manager' OR Job_title NOT  REGEXP 'clerk'); 
+WHERE Dept_no=20 AND (Job_title NOT LIKE 'manager' OR Job_title NOT  LIKE 'clerk'); 
 
 #15.Find the names of employees who earn between 1200/- and 1400/-.
 SELECT Name 
@@ -196,12 +196,12 @@ WHERE Salary BETWEEN 1200 AND 1400;
 #16.Find the employees who are clerks, analysts or salesmen.
 SELECT Name,Job_title 
 FROM employee 
-WHERE Job_title REGEXP 'manager' OR Job_title REGEXP 'Clerk' OR Job_title REGEXP 'Salesmen';
+WHERE Job_title LIKE 'manager' OR Job_title LIKE 'Clerk' OR Job_title LIKE 'Salesmen';
 
 #17.Find the employees who are not clerks, analysts or salesmen.
 SELECT Name,Job_title 
 FROM employee 
-WHERE Job_title NOT REGEXP 'manager' AND Job_title NOT REGEXP 'Clerk' AND Job_title NOT REGEXP 'Salesmen';
+WHERE Job_title NOT LIKE 'manager' AND Job_title NOT LIKE 'Clerk' AND Job_title NOT LIKE 'Salesmen';
 
 #18.Find the employees who do not receive commission.
 SELECT Name,Commision 
@@ -235,26 +235,15 @@ FROM
 
 #22.Find all the employees whose total earning is greater than 2000/- .
 
-SELECT 
-    Emp_id,Name,Salary,Commision,
-    CASE
-        WHEN Commision = 0 OR Commision IS NULL THEN Salary + 250
-        ELSE Salary + Commision
-    END AS Net_earnings
+SELECT *
 FROM employee
-WHERE  
-CASE
-        WHEN Commision = 0 OR Commision IS NULL THEN Salary + 250
-        ELSE Salary + Commision
-    END >2000;
-
+WHERE (Salary+Commision)>2000;
 
 #23.Find all the employees whose name begins or ends with ‘M’
 
 SELECT * 
 FROM employee 
-WHERE Name like CONCAT(CHAR(77),'%') 
-OR Name like CONCAT('%',CHAR(77));
+WHERE Name like '%M'  OR Name like 'M%';
 
 #24.Find all the employees whose names contain the letter ‘M’ in any case.
 SELECT * FROM employee WHERE Name like '%M%';
@@ -272,16 +261,16 @@ DAY(Hire_date)=LAST_DAY(Hire_date);
 
 
 #28.Find all the employees who were hired more than 2 years ago.
-SELECT * FROM employee WHERE timestampdiff(YEAR,Hire_date, curdate()) = 2;
+SELECT * FROM employee WHERE timestampdiff(YEAR,Hire_date, curdate()) > 2 ;
 
 #29.Find the managers hired in the year 2003.
-SELECT * FROM employee WHERE year(Hire_date)=2003;
+SELECT * FROM employee WHERE year(Hire_date)=2003 AND Job_title LIKE 'manager';
 
 #30.Display the names and jobs of all the employees separated by a space.
 SELECT concat(Name,' ',Job_title) as newFormat from employee;
 
 #31.Display the names of all the employees right aligning them to 15 characters.
-SELECT concat(LPAD(' ',15,' '),Name) as RihgtAlign FROM employee;
+SELECT LPAD(Name,15,' ') as RihgtAlign FROM employee;
 
 #32.Display the names of all the employees padding them to the right up to 15 characters with ‘*’.
 
@@ -294,8 +283,7 @@ SELECT Name FROM employee WHERE Name NOT LIKE 'A%';
 SELECT Name FROM employee WHERE Name NOT LIKE '%R';
 
 #35.Show the first 3 and last 3 characters of the names of all the employees.
-SELECT LEFT(Name,3) AS FirstThree,
-RIGHT(Name,3) AS LastThree
+SELECT CONCAT(LEFT(Name,3),RIGHT(Name,3)) AS FirstThree
 FROM employee;
 
 #36.Display the names of all the employees replacing ‘A’ with ‘a’.
