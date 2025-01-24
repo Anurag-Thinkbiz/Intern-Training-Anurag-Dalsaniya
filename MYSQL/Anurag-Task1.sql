@@ -294,7 +294,7 @@ FROM employee;
 #37.Display the names of all the employees and position where the string ‘AR’ occurs in the name.
 SELECT Name,LOCATE('AR',Name) AS position
 FROM employee
-WHERE Name like '%AR%';
+WHERE LOCATE('AR',Name)>0;
 
 #38.Show the salary of all the employees , rounding it to the nearest Rs. 1000/-.
 SELECT ROUND(Salary,-3) AS RoundedSalary FROM employee; 

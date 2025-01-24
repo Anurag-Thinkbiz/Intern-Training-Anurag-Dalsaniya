@@ -82,7 +82,7 @@ SELECT * FROM WORKER WHERE MONTH(JOINING_DATE)=2 AND YEAR(JOINING_DATE)=2014;
 SELECT UCASE(FIRST_NAME) AS UpperCaseName FROM worker;
 									
 #Q-8. Write an SQL query to fetch worker names with salaries >= 50000 and <= 100000.									
-SELECT * FROM WORKER WHERE SALARY >=50000 AND SALARY<= 100000;									
+SELECT name FROM WORKER WHERE SALARY >=50000 AND SALARY<= 100000;									
 
 #Q-9. Write an SQL query to print details of the Workers who are also Managers.									
 SELECT * FROM worker W join title T ON W.WORKER_ID=T.WORKER_REF_ID WHERE T.WORKER_TITLE='Manager';
@@ -99,10 +99,10 @@ WITH working AS (
 SELECT RTRIM(FIRST_NAME) FROM worker ;	
 									
 #Q-13. Write an SQL query to print the FIRST_NAME from Worker table after replacing ‘a’ with ‘A’.									
-SELECT REPLACE(FIRST_NAME,'a','A') FROM worker;
+SELECT FIRST_NAME,REPLACE(FIRST_NAME,'a','A') FROM worker;
 
 #14. Write an SQL query to print the FIRST_NAME and LAST_NAME from Worker table into a single column COMPLETE_NAME. A space char should separate them.									
-SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) FROM worker;	
+SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) as COMPLETE_NAME FROM worker;	
 								
 #Q-15. Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending.									
 SELECT * FROM worker ORDER BY FIRST_NAME,LAST_NAME DESC;
