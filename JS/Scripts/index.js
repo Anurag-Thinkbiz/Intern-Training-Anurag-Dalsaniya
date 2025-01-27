@@ -17,7 +17,6 @@ let form, cardContainer, clearAll, editIcon, sorting;
   showAllTasks(allTasks);
 })();
 
-
 function clearAllValueFromForm() {
   document.getElementById("Task").value = "";
   document.getElementById("starttime").value = undefined;
@@ -153,7 +152,16 @@ document
         : "none";
   });
 
-function changeBackground (priority, endTask)  {
+document
+  .getElementsByClassName("add-task-button")[0]
+  .addEventListener("click", () => {
+    const taskForm = document.getElementById("form");
+    taskForm.style.display =
+      taskForm.style.display === "none" || taskForm.style.display === ""
+        ? "block"
+        : "none";
+  });
+function changeBackground(priority, endTask) {
   if (endTask < getCurrentTimeStr()) return "red";
   else {
     switch (priority) {
@@ -165,8 +173,7 @@ function changeBackground (priority, endTask)  {
         return "#1976D2";
     }
   }
-};
-
+}
 
 let modal = document.getElementById("myModal");
 let btn = document.querySelector(".add-task-button");

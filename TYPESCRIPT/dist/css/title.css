@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+#heading {
+  padding: 10px;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
+#heading .main-title {
+  color: black;
+  text-transform: capitalize;
+  text-shadow: 0px 1px 1px black;
+}/*# sourceMappingURL=title.css.map */

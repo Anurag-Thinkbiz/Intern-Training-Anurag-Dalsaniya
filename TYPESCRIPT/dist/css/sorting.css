@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+#filter {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding-right: 7%;
+  gap: 10px;
+}
+#filter #sorting {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid gray;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  border-radius: 5px;
+}
+#filter #sorting:hover {
+  border-color: #1976d2;
+}
+#filter #sorting:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 5px rgba(200, 222, 245, 0.5);
+}
+#filter .option {
+  font-size: 16px;
+  padding: 10px;
+  background-color: #ffffff;
+  color: #2c3e50;
+  border: none;
+}
+#filter .option:hover {
+  background-color: #f4f6f9;
+}/*# sourceMappingURL=sorting.css.map */
