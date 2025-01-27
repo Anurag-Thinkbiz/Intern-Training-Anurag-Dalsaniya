@@ -1,0 +1,227 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.add-task-button {
+  outline: none;
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.add-task-button:hover {
+  background: #222;
+  cursor: pointer;
+}
+
+#add-tasks {
+  margin: auto;
+  width: 30%;
+  text-align: start;
+  border-radius: 5%;
+}
+#add-tasks .modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+#add-tasks .modal-content {
+  margin: auto auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 50%;
+  border: 1px solid #888;
+  border-radius: 5px;
+}
+#add-tasks .close,
+#add-tasks .close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+#add-tasks .close:hover,
+#add-tasks .close:focus,
+#add-tasks .close-btn:hover {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+#add-tasks #form {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  justify-content: center;
+  color: white;
+  box-shadow: 1px 1px 3px 1px gray;
+  background: #d2dae2;
+  border-radius: 5px;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+#add-tasks #form .add-task-title {
+  text-align: center;
+  padding-bottom: 15px;
+  color: black;
+}
+#add-tasks #form label {
+  font-weight: 300;
+  color: black;
+}
+#add-tasks #form .task {
+  display: flex;
+  gap: 4px;
+  justify-content: start;
+  align-items: center;
+  margin-top: 10px;
+}
+#add-tasks #form .task #Task {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+}
+#add-tasks #form .task #Task:focus {
+  outline: none;
+  border-bottom: 1px solid gray;
+}
+#add-tasks #form #description1 {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+#add-tasks #form #description1 #description {
+  background: #e5eef6;
+  outline: none;
+  border: none;
+  padding: 10px;
+  resize: vertical;
+  border-radius: 10px;
+  overflow: hidden;
+}
+#add-tasks #form .date {
+  margin-top: 10px;
+}
+#add-tasks #form .date #date {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .starttime {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+#add-tasks #form .starttime #starttime {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .endtime {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  margin-top: 10px;
+}
+#add-tasks #form .endtime #endtime {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .importance {
+  margin-top: 10px;
+}
+#add-tasks #form .importance #high,
+#add-tasks #form .importance #low,
+#add-tasks #form .importance #medium {
+  outline: none;
+  border: none;
+  background: #e5eef6;
+  padding: 10px;
+  border-radius: 10px;
+}
+#add-tasks #form .btns {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+#add-tasks #form .submit-btn {
+  outline: none;
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+#add-tasks #form .submit-btn:hover {
+  background: #222;
+  cursor: pointer;
+}
+#add-tasks #form .edit-submit-btn {
+  outline: none;
+  border: none;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  display: none;
+}
+#add-tasks #form .edit-submit-btn:hover {
+  background: #222;
+  cursor: pointer;
+}
+#add-tasks #form .error {
+  color: red;
+}
+
+@media (max-width: 1024px) {
+  #add-tasks .modal-content {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
+  #add-tasks .modal-content {
+    width: 55%;
+  }
+}
+@media (max-width: 426px) {
+  #add-tasks .modal-content {
+    width: 80%;
+  }
+}
+@media (max-width: 376px) {
+  #add-tasks .modal-content {
+    width: 95%;
+    margin: auto;
+  }
+}/*# sourceMappingURL=addtask.css.map */

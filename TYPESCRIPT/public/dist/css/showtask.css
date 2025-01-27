@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+#show-tasks {
+  padding: 10px;
+  margin: auto;
+  width: 100%;
+}
+#show-tasks .main-card {
+  margin: auto;
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 90%;
+}
+#show-tasks .main-card .card {
+  width: 300px;
+  color: #222;
+  padding: 10px;
+  border-radius: 5px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease-in-out;
+}
+#show-tasks .main-card .card .icon-task-container {
+  display: flex;
+  gap: 1%;
+  align-items: center;
+  justify-content: space-between;
+}
+#show-tasks .main-card .card .icon-task-container .task-name1 {
+  font-weight: bold;
+  width: -moz-fit-content;
+  width: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#show-tasks .main-card .card .icon-task-container .icons {
+  display: flex;
+  gap: 10px;
+}
+#show-tasks .main-card .card .icon-task-container .icons:hover {
+  cursor: pointer;
+}
+#show-tasks .main-card .card .description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#show-tasks .main-card .card:hover {
+  box-shadow: 1px 1px 3px 1px #666;
+  transition: all 0.5s ease-in-out;
+}
+
+@media (max-width: 320px) {
+  #show-tasks {
+    padding: 0;
+    margin-top: 10px;
+  }
+  #show-tasks .main-card {
+    width: 100%;
+    padding-left: 10px;
+  }
+}
+@media (min-width: 375px) and (max-width: 426px) {
+  #show-tasks {
+    padding: 0;
+    margin-top: 10px;
+  }
+  #show-tasks .main-card {
+    width: 70%;
+    margin: auto;
+  }
+}/*# sourceMappingURL=showtask.css.map */

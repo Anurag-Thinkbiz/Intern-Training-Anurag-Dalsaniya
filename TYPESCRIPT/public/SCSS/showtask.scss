@@ -1,0 +1,86 @@
+@import "style";
+
+#show-tasks {
+  padding: $padding-left;
+  margin: auto;
+  width: 100%;
+
+  .main-card {
+    margin: auto;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 90%;
+    .card {
+      width: 300px;
+      color: #222;
+      padding: $padding-left;
+      border-radius: $border-card;
+      gap: 10px;
+      display: flex;
+      flex-direction: column;
+      @include trasition-ease-in-out;
+      .icon-task-container {
+        display: flex;
+        gap: 1%;
+        align-items: center;
+        justify-content: space-between;
+        .task-name1 {
+          font-weight: bold;
+          width: fit-content;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .icons {
+          display: flex;
+          gap: 10px;
+
+          
+          &:hover {
+            cursor: pointer;
+          }
+          
+        }
+        
+      }
+
+      .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: justify;
+        width: fit-content;
+      }
+      &:hover {
+        box-shadow: 1px 1px 3px 1px #666;
+        @include trasition-ease-in-out;
+      }
+     
+    }
+  }
+}
+@media (max-width: 320px) {
+  #show-tasks {
+    padding: 0;
+    margin-top: 10px;
+    .main-card {
+      width: 100%;
+      padding-left: 10px;
+    }
+  }
+}
+@media (min-width: 375px) and (max-width: 426px) {
+  #show-tasks {
+    padding: 0;
+    margin-top: 10px;
+    .main-card {
+      width: 70%;
+      // padding-left: 10px;
+      margin: auto;
+    }
+  }
+}
