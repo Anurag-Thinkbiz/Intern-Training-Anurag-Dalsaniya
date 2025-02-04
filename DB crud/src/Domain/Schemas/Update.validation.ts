@@ -6,6 +6,7 @@ import joi from "joi";
 function validUser(user: User) {
   const joiSchema = joi
     .object({
+      id:joi.number().integer(),
       name: joi.string().min(1).max(10),
       password: joi.string().min(8).max(16).alphanum(),
       address: joi.string().max(100),
@@ -18,9 +19,7 @@ export function userUpdateSchemaValidation(
   res: Response,
   next: NextFunction
 ) {
-  if (Number.isNaN(parseInt(req.params.id)))
-    res.status(403).send("enter ID in valid formate");
-
+  req.body.id=req.params.id;
   if (Object.keys(req.body).length === 0)
     res.status(400).send("request body is empty");
   else {

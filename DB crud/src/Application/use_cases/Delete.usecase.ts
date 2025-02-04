@@ -8,6 +8,9 @@ export async function deleteUsecase(
   UserRepository: UserRepositoryPort
 ): Promise<boolean> {
   if (userdataRole === "admin") {
+    if (requestUserDataRole === "admin") {
+      throw new Error(`unauthorized you can't delete admin`);
+    }
     const result = await UserRepository.deleteUserAdmin(requestUserDataEmail);
     if (result) {
       return true;
