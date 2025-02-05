@@ -1,6 +1,7 @@
 import { number } from "joi";
 
 export type User = {
+  id?:number;
   name: string;
   role: string;
   password: string;
@@ -15,8 +16,8 @@ export type UpdateUser = {
   address?: string;
 };
 export type LoginUser = {
+  id?:number;
   email: string;
   password: string;
   role?:string;
 };
-

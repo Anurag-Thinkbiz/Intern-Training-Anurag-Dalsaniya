@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { loginUserUsecase } from "../../Application/use_cases/Login.usercase";
+import { loginUserUsecase } from "../../Application/use_cases/Login.usecase";
 import { UserRepositoryPort } from "../../Application/port/userRepositories.port";
 export const loginUserController =
   (UserRepository: UserRepositoryPort): any =>
@@ -11,19 +11,13 @@ export const loginUserController =
         password,
         UserRepository
       );
-      if (accessToken) {
-        return res.status(200).json({ accessToken: accessToken });
-      } else {
-        throw new Error("error while generating token");
-      }
+      return res.status(200).json({ accessToken: accessToken });
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message === "user credentials invalid") {
           res.status(401).send("user credentials invalid");
-        } else if (error.message === "User not exists.") {
-          res.status(404).send("User not exists.");
-        } else {
-          res.status(500).send("An unknown error occurred");
+        } else if (error.message === "User is not Exists") {
+          res.status(404).send("User is not Exists");
         }
       } else {
         res.status(500).send("error while generating token");

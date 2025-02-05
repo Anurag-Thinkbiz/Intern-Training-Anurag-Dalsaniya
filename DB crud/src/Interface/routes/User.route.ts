@@ -1,43 +1,44 @@
-import { userRegisterSchemaValidation } from "../../Domain/Schemas/User.validation";
-import { userLoginSchemaValidation } from "../../Domain/Schemas/Login.validation";
+import { RegisterValidationSchema } from "../../Domain/Schemas/User.validation";
+import { SchemaValidation } from "../../Infrastructure/helpers/Validation";
+import { DeleteValidationSchema } from "../../Domain/Schemas/Delete.validation";
+import { LoginValidationSchema } from "../../Domain/Schemas/Login.validation";
+import { UpdateValidationSchema } from "../../Domain/Schemas/Update.validation";
 import { userCreateController } from "../controllers/user.controller";
 import { loginUserController } from "../controllers/login.controller";
-import { authUserWithToken } from "../../Infrastructure/helpers/Middleware";
-import { getUserDetailController } from "../../Interface/controllers/getuser.controller";
 import { deleteUserController } from "../controllers/delete.controller";
-import { userUpdateSchemaValidation } from "../../Domain/Schemas/Update.validation";
 import { updateUserController } from "../controllers/update.controller";
+import { getUserDetailController } from "../controllers/getUser.controller";
+import { authUserWithToken } from "../../Infrastructure/helpers/Middleware";
+import { UserRepository } from "../../Infrastructure/repositories/user.Repository.ts";
 
 import express from "express";
-import { userDeleteSchemaValidation } from "../../Domain/Schemas/Delete.validation";
-import { UserRepository } from "../../Infrastructure/repositories/user.Repository.ts";
 const router = express.Router();
 
 router.post(
   "/register",
-  userRegisterSchemaValidation,
+  SchemaValidation(RegisterValidationSchema),
   userCreateController(UserRepository)
 );
 router.post(
   "/login",
-  userLoginSchemaValidation,
+  SchemaValidation(LoginValidationSchema),
   loginUserController(UserRepository)
 );
 router.get(
-  "/getdetails",
+  "/details",
   authUserWithToken,
   getUserDetailController(UserRepository)
 );
 router.patch(
   "/update/:id",
   authUserWithToken,
-  userUpdateSchemaValidation,
+  SchemaValidation(UpdateValidationSchema),
   updateUserController(UserRepository)
 );
 router.delete(
   "/delete/:id",
   authUserWithToken,
-  userDeleteSchemaValidation,
+  SchemaValidation(DeleteValidationSchema),
   deleteUserController(UserRepository)
 );
 export default router;

@@ -1,11 +1,10 @@
 import { db } from "../../Infrastructure/Webserver/Express/app";
 import {
-  QueryResult,
   FieldPacket,
   ResultSetHeader,
   RowDataPacket,
 } from "mysql2";
-import { UpdateUser } from "../../Domain/modals/user.modals";
+import { LoginUser, UpdateUser, User } from "../../Domain/modals/user.modals";
 
 export async function CreateUserQuery(
   name: string,
@@ -23,55 +22,36 @@ export async function CreateUserQuery(
     password,
     address,
   ]);
-  if (result.affectedRows == 1) return true;
-  else throw new Error("Could not create user");
-}
-
-//check for user exists in db or not
-export async function UserExistsQuery(email: string): Promise<number> {
-  const query = "SELECT * FROM users WHERE email = ?";
-  const [result]: [QueryResult, FieldPacket[]] = await db.execute(query, [
-    email,
-  ]);
-  if (Array.isArray(result)) return result.length;
-  else throw new Error("Unexpected result format");
+  return result.affectedRows === 1;
 }
 
 //for login check email and password match
 export async function CheckForPasswordQuery(
   email: string,
   password: string
-): Promise<RowDataPacket[] > {
-  const query = "SELECT role,email FROM users WHERE email = ? and password=?";
+): Promise<LoginUser[]> {
+  const query = "SELECT id,role FROM users WHERE email = ? and password=?";
   const [result]: [RowDataPacket[], FieldPacket[]] = await db.execute(query, [
     email,
     password,
   ]);
-  if (Array.isArray(result)) return result;
-  else throw new Error("error while matching password or role");
+  return result[0] as LoginUser[];
 }
 
 //get data by passing email in query role=user
-export async function getUserDataByEmailQuery(
-  email: string
-): Promise<[RowDataPacket[], FieldPacket[]]> {
-  const query = "SELECT * FROM users WHERE email = ?";
-  const result: [RowDataPacket[], FieldPacket[]] = await db.query(query, [
-    email,
+export async function getUserDataByIDQuery(id: string): Promise<User[]> {
+  const query = "SELECT id, name, email, role, address, password FROM users WHERE id = ?";
+  const [result]: [RowDataPacket[], FieldPacket[]] = await db.query(query, [
+    id,
   ]);
-  if (result) return result;
-  else throw new Error("Error while checking if user exists.");
+  return result as User[];
 }
 
 //get data role=admin
-export async function getUserDataByEmailQueryRoleAdmin(): Promise<
-  [RowDataPacket[], FieldPacket[]]
-> {
-  const query = "SELECT * FROM users";
+export async function getUserDataByEmailQueryRoleAdmin(): Promise<User[]> {
+  const query = "SELECT id, name, email, role, address, password FROM users";
   const result: [RowDataPacket[], FieldPacket[]] = await db.query(query);
-  if (result[0].length >= 1) {
-    return result;
-  } else throw new Error("Error fetching data from database.");
+  return result[0] as User[];
 }
 
 export async function deleteUserQuery(email: string): Promise<boolean> {
@@ -100,30 +80,21 @@ export async function deleteUserQueryByUser(
   }
 }
 //for request user check
-export async function getUserByIDQuery(
-  email: string
-): Promise<[RowDataPacket[], FieldPacket[]]> {
-  const query = "SELECT * FROM users WHERE email = ?";
-  const result: [RowDataPacket[], FieldPacket[]] = await db.query(query, [
+export async function getUserByEmailQuery(email: string): Promise<User[]> {
+  const query =
+    "SELECT id, name, email, role, address, password FROM users WHERE email = ?";
+
+  const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query(query, [
     email,
   ]);
-  if (result[0].length >= 1) return result;
-  else throw new Error("Error while checking if user exists.");
-}
 
-export async function getUserByIDQueryForDelete(reqID:string):Promise<[RowDataPacket[], FieldPacket[]]> {
-  const query = "SELECT * FROM users WHERE id = ?";
-  const result: [RowDataPacket[], FieldPacket[]] = await db.query(query, [
-    reqID,
-  ]);
-  if (result[0].length >= 1) return result;
-  else throw new Error("Error while checking if user exists.");
+  return rows as User[];
 }
 
 export async function updateUserQuery(
   userData: UpdateUser,
-  ReqID: string
-): Promise<[ResultSetHeader, FieldPacket[]]> {
+  ReqID: number
+): Promise<UpdateUser[]> {
   const reqID = ReqID;
   let updateData: any = userData;
   let updateUserQuery: string = "update users set ";
@@ -140,14 +111,10 @@ export async function updateUserQuery(
   updateUserQuery += " where id = ?";
   value.push(reqID);
 
-  const result: [ResultSetHeader, FieldPacket[]] = await db.execute(
+  const result: [RowDataPacket[], FieldPacket[]] = await db.query(
     updateUserQuery,
     value
   );
-  if (result) {
-    return result;
-  } else {
-    throw new Error("not able to update user");
-  }
-}
 
+  return result as UpdateUser[];
+}

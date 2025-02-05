@@ -17,7 +17,7 @@ export const userCreateController =
       if (result) {
         res.status(201).send("user created successfully");
       } else {
-        res.status(500).send("error in inserting data");
+        throw new Error('Error in inserting data')
       }
     } catch (error: unknown) {
       if (error instanceof Error) {

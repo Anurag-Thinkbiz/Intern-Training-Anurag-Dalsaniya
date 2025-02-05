@@ -1,13 +1,13 @@
-import { FieldPacket, RowDataPacket } from "mysql2";
 import { UserRepositoryPort } from "../port/userRepositories.port.js";
+import { User } from "../../Domain/modals/user.modals.js";
 export async function getUserUsecaseByID(
   reqId: string,
   UserRepository: UserRepositoryPort
-): Promise<RowDataPacket[]> {
-  const data: [RowDataPacket[], FieldPacket[]] =
-    await UserRepository.getUserByIDQueryForDelete(reqId);
-  if (data[0].length >= 1) {
-    return data[0];
+): Promise<User[]> {
+  const data: User[] =
+    await UserRepository.getDetailUser(reqId);
+  if (data ) {
+    return data as User[];
   } else {
     throw new Error(`Requested user not exists`);
   }
@@ -15,26 +15,24 @@ export async function getUserUsecaseByID(
 
 export async function getUserUsecase(
   role: string,
-  email: string,
+  id: string,
   UserRepository: UserRepositoryPort
-): Promise<boolean | RowDataPacket[]> {
+): Promise<boolean | User[]> {
   if (role === "admin") {
-    const data: [RowDataPacket[], FieldPacket[]] =
+    const data: User[] =
       await UserRepository.getDetailAdmin();
-    if (data[0].length >= 1) {
-      return data[0];
+    if (data.length >= 1) {
+      return data;
     } else {
-      throw new Error(`not getting in db`);
-    }
-  } else if (role === "user") {
-    const data: [RowDataPacket[], FieldPacket[]] =
-      await UserRepository.getDetailUser(email);
-    if (data[0].length >= 1) {
-      return data[0];
-    } else {
-      throw new Error(`not getting ${email} in db`);
+      throw new Error(`no data found`);
     }
   } else {
-    throw new Error("role is not valid");
+    const data: User[] =
+      await UserRepository.getDetailUser(id);
+    if (data.length >= 1) {
+      return data;
+    } else {
+      throw new Error(`not Finding in database`);
+    }
   }
 }

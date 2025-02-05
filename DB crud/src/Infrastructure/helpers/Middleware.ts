@@ -1,8 +1,6 @@
 // token validation is here
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-import { FieldPacket, RowDataPacket } from "mysql2";
-import { loginUserUsecaseForMiddleware } from "../../Application/use_cases/Login.usercase";
 
 export async function authUserWithToken(
   req: Request,
@@ -19,12 +17,8 @@ export async function authUserWithToken(
         process.env.ACCESSTOKEN!
       ) as jwt.JwtPayload;
       if (decode) {
-        const data: [RowDataPacket[], FieldPacket[]] =
-           await loginUserUsecaseForMiddleware(decode.email);
-        res.locals = data;
+        res.locals = decode;
         next();
-      } else {
-        throw new Error("token is not valid");
       }
     } catch (error) {
       res.status(401).send("token is not valid");

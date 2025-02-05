@@ -1,4 +1,3 @@
-import { emitWarning } from "process";
 import { UserRepositoryPort } from "../../../Application/port/userRepositories.port";
 import {
   LoginUser,
@@ -8,19 +7,15 @@ import {
 import {
   CheckForPasswordQuery,
   CreateUserQuery,
-  UserExistsQuery,
+  getUserDataByIDQuery,
   updateUserQuery,
   deleteUserQuery,
   getUserDataByEmailQueryRoleAdmin,
-  getUserByIDQuery,
-  getUserByIDQueryForDelete,
+  getUserByEmailQuery,
 } from "../sqlquery";
-import { ResultSetHeader, FieldPacket, RowDataPacket } from "mysql2";
 
 export const UserRepository: UserRepositoryPort = {
   createUser: async (user: User): Promise<boolean> => {
-    const result = await UserExistsQuery(user.email);
-    if (result >= 1) throw new Error("User already exists.");
     const data = await CreateUserQuery(
       user.name,
       user.email,
@@ -30,29 +25,19 @@ export const UserRepository: UserRepositoryPort = {
     );
     return data;
   },
-  loginUser: async (loginUser: LoginUser): Promise<RowDataPacket[]> => {
-    const userExists = await UserExistsQuery(loginUser.email);
-    if (!userExists) {
-      throw new Error("User not exists.");
-    }
-    const result = await CheckForPasswordQuery(
+  loginUser: async (loginUser: LoginUser): Promise<LoginUser[]> => {
+    const result: LoginUser[] = await CheckForPasswordQuery(
       loginUser.email,
       loginUser.password
     );
-    console.log(result);
-    
-    if (result.length <= 0) {
-      throw new Error("user credentials invalid");
-    } else {
-      return result;
-    }
+    return result;
   },
   updateUser: async (
     updateUser: UpdateUser,
-    reqID: string
-  ): Promise<[ResultSetHeader, FieldPacket[]]> => {
+    reqID: number
+  ): Promise<UpdateUser[]> => {
     const result = await updateUserQuery(updateUser, reqID);
-    return result;
+    return result as UpdateUser[];
   },
   deleteUserAdmin: async (email: string): Promise<boolean> => {
     const result = await deleteUserQuery(email);
@@ -62,24 +47,16 @@ export const UserRepository: UserRepositoryPort = {
     const result = await deleteUserQuery(email);
     return result;
   },
-  getDetail: async (
-    reqID: string
-  ): Promise<[RowDataPacket[], FieldPacket[]]> => {
-    const result = await getUserByIDQuery(reqID);
+  getDetail: async (email: string): Promise<User[]> => {
+    const result = await getUserByEmailQuery(email);
     return result;
   },
-  getDetailAdmin: async (): Promise<[RowDataPacket[], FieldPacket[]]> => {
-    const result = await getUserDataByEmailQueryRoleAdmin();
+  getDetailAdmin: async (): Promise<User[]> => {
+    const result:User[] = await getUserDataByEmailQueryRoleAdmin();
     return result;
   },
-  getDetailUser: async (
-    email: string
-  ): Promise<[RowDataPacket[], FieldPacket[]]> => {
-    const result = await getUserByIDQuery(email);
-    return result;
-  },
-  getUserByIDQueryForDelete:async(reqID:string):Promise<[RowDataPacket[], FieldPacket[]]>=>{
-    const result = await getUserByIDQueryForDelete(reqID);
+  getDetailUser: async (id: string): Promise<User[]> => {
+    const result = await getUserDataByIDQuery(id);
     return result;
   }
 };

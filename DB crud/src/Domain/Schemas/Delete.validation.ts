@@ -1,11 +1,7 @@
-import { NextFunction, Response, Request } from "express";
+import joi from "joi";
 
-export function userDeleteSchemaValidation(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  if (Number.isNaN(parseInt(req.params.id)))
-   throw new Error('enter ID in valid formate');
-  else next();
-}
+export const DeleteValidationSchema = joi
+  .object({
+    id: joi.number().integer(),
+  })
+  .options({ abortEarly: false });
