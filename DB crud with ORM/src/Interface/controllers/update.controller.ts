@@ -7,15 +7,13 @@ export const updateUserController =
   (UserRepository: UserRepositoryPort) =>
   async (req: Request, res: Response) => {
     const reqData: UpdateUser = req.body;
-    const ReqID = req.params.id;
     const LoginUserID = res.locals.id;
     try {
-      const result = await UserRepository.wrapTransaction(
+      await UserRepository.wrapTransaction(
         async (E: EntityManager) => {
           return await updateUserUsecase(
             reqData,
             LoginUserID,
-            ReqID,
             UserRepository,
             E
           );

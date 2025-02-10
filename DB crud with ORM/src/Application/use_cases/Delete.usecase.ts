@@ -12,16 +12,13 @@ export async function deleteUsecase(
       reqID,
       E
     );
-    console.log(requestUserData);
     if (!requestUserData) {
       throw new Error("Requested user not exists");
     }
     if (requestUserData[0].role === "admin") {
       throw new Error(`unauthorized you can't delete admin`);
     }
-    console.log(requestUserData);
     const result = await UserRepository.deleteUser(requestUserData[0].email, E);
-    console.log(result);
     
     if (result) {
       return true;

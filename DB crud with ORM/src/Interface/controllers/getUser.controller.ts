@@ -1,13 +1,11 @@
-import { Response, Request } from "express";
+import  { Response, Request } from "express";
 import { UserRepositoryPort } from "../../Application/port/userRepositories.port";
 import { getUserUsecase } from "../../Application/use_cases/GetDetails.usecase";
 import { EntityManager } from "typeorm";
 export const getUserDetailController =
-  (UserRepository: UserRepositoryPort): any =>
+  (UserRepository: UserRepositoryPort) =>
   async (req: Request, res: Response) => {
-    const data = res.locals;
-    const role: string = data.role;
-    const id: string = data.id;
+    const { role, id } = res.locals;
     const isAdmin: boolean = req.query.isAdmin === "true";
     try {
       const result = await UserRepository.wrapTransaction(
@@ -17,6 +15,16 @@ export const getUserDetailController =
       );
       return res.status(200).send(result);
     } catch (error) {
-      return res.status(500).send("not receiving data");
+      if (error instanceof Error) {
+        if (error.message === "not Finding in database") {
+          res.status(404).send({
+            message: "user is not found",
+          });
+        } else {
+          res.status(500).send({
+            message: "internal server error",
+          });
+        }
+      }
     }
   };

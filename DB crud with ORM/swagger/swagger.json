@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080/"
+            "url": "http://localhost:8000/"
         }
     ],
     "paths": {
@@ -139,7 +139,7 @@
                 }
             }
         },
-        "/user/update/{id}": {
+        "/user/update": {
             "patch": {
                 "tags": [
                     "User"
@@ -151,18 +151,6 @@
                         "bearerAuth": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "74713e86-64e0-46dc-89b5-9c42bb42d884"
-                        },
-                        "description": "ID of the user to update"
-                    }
-                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -170,6 +158,10 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "63228b18-f5be-4dbf-80a3-b27cb4fbdb"
+                                    },
                                     "name": {
                                         "type": "string",
                                         "example": "John Doe"
@@ -217,7 +209,7 @@
                 }
             }
         },
-        "/user/delete/{id}": {
+        "/user/delete": {
             "delete": {
                 "tags": [
                     "User"
@@ -232,13 +224,13 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
+                        "description": "delete user id",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "74713e86-64e0-46dc-89b5-9c42bb42d884"
-                        },
-                        "description": "ID of the user to delete"
+                            "default": "09f54bce-39ab-49ae-aa8e-9d58c94e3b"
+                        }
                     }
                 ],
                 "responses": {

@@ -2,7 +2,7 @@ import { LoginUser } from "../../Domain/modals/user.modals";
 import jwt from "jsonwebtoken";
 import { UserRepositoryPort } from "../port/userRepositories.port";
 import { EntityManager } from "typeorm";
-import { User } from "../../Infrastructure/orm/typeorm/entities/user.entity";
+
 export async function loginUserUsecase(
   email: string,
   password: string,

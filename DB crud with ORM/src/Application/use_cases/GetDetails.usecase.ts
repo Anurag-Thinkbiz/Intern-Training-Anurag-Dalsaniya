@@ -22,16 +22,16 @@ export async function getUserUsecase(
   UserRepository: UserRepositoryPort,
   E: EntityManager
 ): Promise<boolean | User[]|CreateUser[]> {
-  if (role === "admin" && !isAdmin) {
+  if (role === "admin" && isAdmin) {
     const data: User[] = await UserRepository.getDetailAdmin(E);
     if (data.length >= 1) {
       return data;
     } else {
-      throw new Error(`no data found`);
+      throw new Error(`not Finding in database`);
     }
   } else {
     const data: CreateUser[] = await UserRepository.getDetailUser(id, E);
-    if (data.length >= 1) {
+    if (data.length > 0) {
       return data;
     } else {
       throw new Error(`not Finding in database`);

@@ -15,7 +15,7 @@ export async function authUserWithToken(
     });
   else {
     try {
-      const decode: jwt.JwtPayload = jwt.verify(
+      const decode = jwt.verify(
         token,
         process.env.ACCESSTOKEN!
       ) as jwt.JwtPayload;

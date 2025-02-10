@@ -12,6 +12,7 @@ export type UserRole ={
   user : "user"
 }
 export type UpdateUser = {
+  id:string;
   name?: string;
   role?: string;
   password?: string;
@@ -19,8 +20,6 @@ export type UpdateUser = {
   address?: string;
 };
 export type LoginUser = {
-  id?:string;
   email: string;
   password: string;
-  role?:string;
 };

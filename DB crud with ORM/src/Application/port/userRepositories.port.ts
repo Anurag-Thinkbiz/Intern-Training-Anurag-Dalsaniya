@@ -1,7 +1,7 @@
 import {
   CreateUser,
   UpdateUser,
-  LoginUser
+  LoginUser,
 } from "../../Domain/modals/user.modals";
 import { User } from "../../Infrastructure/orm/typeorm/entities/user.entity";
 

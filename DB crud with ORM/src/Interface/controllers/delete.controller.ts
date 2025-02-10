@@ -5,13 +5,13 @@ import { EntityManager } from "typeorm";
 export const deleteUserController =
   (UserRepository: UserRepositoryPort) =>
   async (req: Request, res: Response) => {
-    const reqId = req.params.id;
+    const reqId = req.query.id+'';
     try {
       const userdata = res.locals;
       if (!userdata) {
         throw new Error("Token not exists.");
       } else {
-        const result = await UserRepository.wrapTransaction(
+         await UserRepository.wrapTransaction(
           async (E: EntityManager) => {
             return await deleteUsecase(userdata.role, reqId, UserRepository, E);
           }

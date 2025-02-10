@@ -30,13 +30,13 @@ router.get(
   getUserDetailController(UserRepository)
 );
 router.patch(
-  "/update/:id",
+  "/update",
   authUserWithToken,
   SchemaValidation(UpdateValidationSchema),
   updateUserController(UserRepository)
 );
 router.delete(
-  "/delete/:id",
+  "/delete",
   authUserWithToken,
   SchemaValidation(DeleteValidationSchema),
   deleteUserController(UserRepository)

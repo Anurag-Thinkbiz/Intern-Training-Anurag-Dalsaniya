@@ -4,18 +4,24 @@ import { UserRepositoryPort } from "../port/userRepositories.port";
 export async function updateUserUsecase(
   userData: UpdateUser,
   LoginUserID: string,
-  ReqID: string,
   UserRepository: UserRepositoryPort,
   E: EntityManager
 ): Promise<boolean> {
-  const userExists: CreateUser[] = await UserRepository.getDetailUser(ReqID, E);
+  if (userData.id !== LoginUserID) {
+    throw new Error("you are not authorize user to update data");
+  }
+  const userExists: CreateUser[] = await UserRepository.getDetailUser(
+    userData.id,
+    E
+  );
   if (!userExists) {
     throw new Error("User not exists.");
   }
-  if (ReqID !== LoginUserID) {
-    throw new Error("you are not authorize user to update data");
-  }
-  const data: boolean = await UserRepository.updateUser(userData, ReqID, E);
+  const data: boolean = await UserRepository.updateUser(
+    userData,
+    userData.id,
+    E
+  );
   if (data) {
     return true;
   } else {

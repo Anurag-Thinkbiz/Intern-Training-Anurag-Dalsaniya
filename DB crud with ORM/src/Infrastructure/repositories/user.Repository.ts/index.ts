@@ -24,7 +24,7 @@ export const UserRepository: UserRepositoryPort = {
       .where("user.email = :email", { email })
       .andWhere("user.password = :password", { password })
       .getOne();
-    console.log(result);
+    
     return result as User;
   },
   updateUser: async (
@@ -40,7 +40,7 @@ export const UserRepository: UserRepositoryPort = {
     return queryBuilder.affected && queryBuilder.affected > 0;
   },
   deleteUser: async (email: string, E: EntityManager): Promise<boolean> => {
-    console.log(email);
+   
     const result = await E.createQueryBuilder()
       .delete()
       .from(User)
@@ -61,7 +61,7 @@ export const UserRepository: UserRepositoryPort = {
       .from(User, "user")
       .where("user.email = :email", { email })
       .getOne();
-    console.log(result);
+
 
     return result;
   },
@@ -95,7 +95,6 @@ export const UserRepository: UserRepositoryPort = {
       .from(User, "user")
       .where("user.id = :id", { id })
       .getRawMany();
-    console.log(result);
     return result;
   },
   wrapTransaction,
