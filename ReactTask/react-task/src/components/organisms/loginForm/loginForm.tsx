@@ -4,7 +4,7 @@ import {  FormHeading,FormContainerLogin } from "../../styles/formStyle/formOrga
 
 const LoginForm = ({formHeading}:{formHeading:string}) => {
   return (
-    <FormContainerLogin style={{}}>
+    <FormContainerLogin >
         <FormHeading >{formHeading}</FormHeading>
         <LoginFormMolecule></LoginFormMolecule>
     </FormContainerLogin>

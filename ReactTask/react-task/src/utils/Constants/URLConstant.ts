@@ -1,3 +1,5 @@
 export const URLConstant={
-    REGISTER:'register'
+    REGISTER:'register',
+    LOGIN:'login',
+    DETAILS:'details'
 }

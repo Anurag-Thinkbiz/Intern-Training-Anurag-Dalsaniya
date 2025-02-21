@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { languages } from "../../../utils/Constants/languageConstant";
-import { useAppDispatch, useAppSelector } from "../../../data/modal/types/hookTypes/reduxType";
+import { useAppDispatch, useAppSelector } from "../../../data/modal/types/hookTypes/hookType";
 import { changeLanguage } from "../../../redux/slices/language.slice";
 import SelectMenu from "../../atoms/SelectMenu/SelectMenu";
 

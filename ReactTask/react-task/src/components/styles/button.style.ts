@@ -31,3 +31,29 @@ transition: background-color 0.3s ease, transform 0.2s ease;
   cursor: not-allowed;
 }
 `;
+
+
+export const StyledLink = styled.a`
+  color: #007bff; /* Blue color for the link */
+  text-decoration: none; /* Remove the underline */
+  font-size: 16px; /* Adjust font size */
+  font-weight: 500; /* Slightly bold text */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+
+  &:hover {
+    color: #0056b3; /* Darker blue color when hovered */
+    text-decoration: underline; /* Underline on hover */
+  }
+
+  &:active {
+    color: #004085; /* Color when clicked */
+  }
+
+  &:visited {
+    color: #6c757d; /* Color after the link is visited */
+  }
+`;
+
+
+
+

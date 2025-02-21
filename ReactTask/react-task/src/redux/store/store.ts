@@ -4,12 +4,18 @@ import logger from "redux-logger";
 import { languageSlice } from "../slices/language.slice";
 import storage from "redux-persist/lib/storage";
 import hardSet from "redux-persist/lib/stateReconciler/hardSet";
-import { languageReduxType } from "../../data/modal/types/reduxTypes/reduxType";
+import {
+  authSliceType,
+  languageReduxType,
+} from "../../data/modal/types/reduxTypes/reduxType";
+import { authSlice } from "../slices/auth.slice";
 
 const rootReducer: Reducer<{
   language: languageReduxType;
+  auth: authSliceType;
 }> = combineReducers({
   language: languageSlice.reducer,
+  auth: authSlice.reducer,
 });
 
 const persistentConfig = {

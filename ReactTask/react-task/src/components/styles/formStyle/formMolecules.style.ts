@@ -5,13 +5,13 @@ export  const FormStyle = styled.form`
   flex-direction: column;
   gap: 20px;
   justify-content:center;
-  align-item:end;
+  align-items:center;
 `;
 
 export const FormSection = styled.div`
   display: flex;
-  justify-content:end;
-  align-item:end;
+  justify-content:center;
+  align-items:center;
   gap: 8px;
 `;
 
@@ -20,7 +20,7 @@ export const Label = styled.label`
   color: #333;
   font-weight: 600;
   display:flex;
-  align-item:center;
+  align-items:center;
   justify-content:center;
 `;
 
@@ -29,7 +29,6 @@ export const InputField = styled.input<{ error?: string }>`
   border: 1px solid ${(props) => (props.error ? 'red' : '#ccc')};
   border-radius: 4px;
   font-size: 14px;
-  
   &:focus {
     border-color: #007BFF;
     outline: none;
@@ -40,23 +39,7 @@ export const ErrorMessage = styled.span`
   color: red;
   font-size: 12px;
   position: absolute;
-  bottom: -18px;
+  width:10px;
+  overflow:hidden;
 `;
 
-export const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-export const Button = styled.button`
-  padding: 12px 20px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  &:hover {
-    background-color: #0056b3;
-  }
-`;

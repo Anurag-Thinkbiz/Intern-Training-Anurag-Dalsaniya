@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import LoginForm from "../organisms/loginForm/loginForm";
 
 const LoginTemplate = () => {
+  const { t } = useTranslation();
   return (
     <>
-      <LoginForm formHeading="Login"></LoginForm>
+      <LoginForm formHeading={t('login')}></LoginForm>
     </>
   );
 };

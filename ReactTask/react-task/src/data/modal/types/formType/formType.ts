@@ -1,3 +1,5 @@
+import { userTypeForHook } from "../hookTypes/hookType";
+
 export type formInputTextType = {
   type: string;
   value?: string;
@@ -20,3 +22,7 @@ export type loginDataType = {
   email: string;
   password: string;
 };
+
+export type userResponseType={
+  user:userTypeForHook[]
+}

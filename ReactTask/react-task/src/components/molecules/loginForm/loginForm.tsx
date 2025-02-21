@@ -4,23 +4,23 @@ import { Input } from "../../atoms/InputElement/Input";
 import { FormStyle } from "../../styles/formStyle/formMolecules.style";
 import { loginDataType } from "../../../data/modal/types/formType/formType";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { schema } from "../../../data/modal/validation/formValidation";
+import { loginSchema } from "../../../data/modal/validation/formValidation";
+import useAuth from "../../../hooks/useAuth";
+import { t } from "i18next";
 
 const LoginFormMolecule = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, touchedFields, isSubmitting, isLoading },
+    reset,
   } = useForm<loginDataType>({
-    resolver: joiResolver(schema),
+    resolver: joiResolver(loginSchema),
   });
-
-  //   const { registerUser } = useRegister<userTypeForHook>();
-
-  const onSubmit: SubmitHandler<loginDataType> = (data) => {
-    console.log(data);
-
-    // registerUser(setRoleData);
+  const { authUser } = useAuth();
+  const onSubmit: SubmitHandler<loginDataType> = (data: loginDataType) => {
+    authUser(data);
+    reset();
   };
   const isFormSubmitting = isSubmitting || isLoading;
   return (
@@ -29,30 +29,32 @@ const LoginFormMolecule = () => {
         <Input
           name="email"
           type="email"
-          labelText="Email"
+          labelText={t("email")}
           htmlForLabel="email"
-          placeholder="Enter your email"
-          error={errors.email?.message}
+          placeholder={t("enter your email")}
+         
           registerProps={register("email")}
-          touchedFields={touchedFields}
+        
         />
+        {touchedFields.email && <p>{errors.email?.message}</p>}
       </div>
       <div>
         <Input
           name="password"
           type="password"
-          labelText="Password"
+          labelText={t("password")}
           htmlForLabel="password"
-          placeholder="Enter your password"
-          error={errors.password?.message}
+          placeholder={t("enter your password")}
+         
           registerProps={register("password")}
-          touchedFields={touchedFields}
+         
         />
+         {touchedFields.password && <p>{errors.password?.message}</p>}
       </div>
       {isFormSubmitting ? (
         <p>loading...</p>
       ) : (
-        <Button text={"Login"} type="submit" />
+        <Button text={t("login")} type="submit" />
       )}
     </FormStyle>
   );

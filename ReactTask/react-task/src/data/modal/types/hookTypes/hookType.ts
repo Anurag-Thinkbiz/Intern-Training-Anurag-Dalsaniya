@@ -9,5 +9,10 @@ export type userTypeForHook = {
   email: string;
   name: string;
   password: string;
-  role: "user" | "admin";
+  role: "user" | "admin"|"";
 };
+
+export type linkType={
+  src:string,
+  text:string
+}
