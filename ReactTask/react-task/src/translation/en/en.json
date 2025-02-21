@@ -1,0 +1,21 @@
+{
+  "greeting": "Welcome to React",
+  "newGreeting": "again welcome",
+  "loginHeader":"login",
+  "hello":"hello",
+  "role":"role",
+  "email":"email",
+  "login":"login",
+  "password":"password",
+  "enter your email":"enter your email",
+  "enter your password":"enter your password",
+  "register":"register",
+  "name":"name",
+  "address":"address",
+  "enter your address":"enter your address",
+  "admin":"admin",
+  "submit":"submit",
+  "myDetails":"myDetails",
+  "report":"report",
+  "logout":"logout"
+}

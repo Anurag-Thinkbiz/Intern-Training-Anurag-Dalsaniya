@@ -1,0 +1,22 @@
+{
+  "greeting": "React में आपका स्वागत है",
+  "newGreeting": "फिर से स्वागत है",
+  "loginHeader": "लॉगिन",
+  "hello": "नमस्ते",
+  "role": "भूमिका",
+  "email": "ईमेल",
+  "login": "लॉगिन",
+  "password": "पासवर्ड",
+  "enter your email": "अपना ईमेल दर्ज करें",
+  "enter your password": "अपना पासवर्ड दर्ज करें",
+  "register": "रजिस्टर",
+  "name": "नाम",
+  "address": "पता",
+  "enter your address": "अपना पता दर्ज करें",
+  "admin": "प्रशासक",
+  "submit": "सबमिट करें",
+  "myDetails": "मेरे विवरण",
+  "report": "रिपोर्ट",
+  "logout": "लॉगआउट",
+  "notFound": "404 - पृष्ठ नहीं मिला"
+}
