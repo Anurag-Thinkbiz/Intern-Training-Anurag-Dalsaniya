@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { userTypeForHook } from "../data/modal/types/hookTypes/hookType";
 
 
-function useGetDetails<T>() {
+function useGetDetails() {
 
   const getDetails = async (): Promise<userTypeForHook | undefined> => {
     try {
@@ -15,8 +15,8 @@ function useGetDetails<T>() {
       } else {
         toast.error("Failed to fetch data. Please try again.");
       }
-    } catch (err: any) {
-      toast.error(`Error: ${err.message}`);
+    } catch (err:any ) {
+      toast.error(err.response?.data.message);
     }
   };
 

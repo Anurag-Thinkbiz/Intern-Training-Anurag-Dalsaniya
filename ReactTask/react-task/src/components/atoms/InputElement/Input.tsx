@@ -3,9 +3,7 @@ import { FormSection, Label } from "../../styles/formStyle/formMolecules.style";
 import { InputField } from "../../styles/formStyle/formMolecules.style";
 
 interface InputProps extends formInputTextType {
-  error?: string;
   registerProps: any;
-  touchedFields?:boolean;
   onBlur?:(e:Event)=>void
 }
 export const Input = ({
@@ -16,7 +14,7 @@ export const Input = ({
   htmlForLabel,
   placeholder,
   registerProps,
-  touchedFields,error,onBlur
+ onBlur
 }: InputProps) => {
   return (
     <>
@@ -31,9 +29,7 @@ export const Input = ({
           {...registerProps}
           onBlur={onBlur}
         />
-        
       </FormSection>
-      {touchedFields&&error}
     </>
   );
 };

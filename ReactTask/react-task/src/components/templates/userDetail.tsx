@@ -2,6 +2,7 @@ import  { useContext } from "react";
 import UserContext from "../../context/userContext";
 import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
+import { Container, Greeting, Heading, NewGreeting, Span } from "../styles/userDetail/UserDetail.style";
 
 
 
@@ -11,24 +12,26 @@ const UserDetail = () => {
   return (
     <>
     <Outlet></Outlet>
+    <Container>
       {user ? (
         <>
-          <h5>
-            {t("hello")} <span> {user.name}</span>
-          </h5>
-          <h5>
-            {t("email")} <span>{user.email}</span>
-          </h5>
-          <h5>
-            {t("role")} <span>{user.role}</span>
-          </h5>
+          <Heading>
+            {t("hello")} <Span>{user.name}</Span>
+          </Heading>
+          <Heading>
+            {t("email")} <Span>{user.email}</Span>
+          </Heading>
+          <Heading>
+            {t("role")} <Span>{user.role}</Span>
+          </Heading>
         </>
       ) : (
         <>
-          <h1>{t("greeting")}</h1>
-          <h1>{t("newGreeting")}</h1>
+          <Greeting>{t("greeting")}</Greeting>
+          <NewGreeting>{t("newGreeting")}</NewGreeting>
         </>
       )}
+    </Container>
     </>
   );
 };

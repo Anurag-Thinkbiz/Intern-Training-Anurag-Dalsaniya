@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { URLConstant } from "../utils/Constants/URLConstant";
 import { API } from "../services/service";
 import { toast } from "react-toastify";
@@ -14,19 +14,17 @@ function useAuth() {
   const authUser = (userLoginData: loginDataType) => {
     API.post(`/${URLConstant.LOGIN}`, userLoginData)
       .then((res: AxiosResponse< string >) => {
-        if (res.data ) {
+        if (res.data) {
           const accessToken = res.data;
-          
           dispatch(logIn( accessToken ));
-
           toast.success("Successfully logged in!");
           navigate("/details");  
         } else {
-          toast.error("Failed to login. Please try again.");
+          toast.error('failed to Login please try again');
         }
       })
-      .catch((err: Error) => {
-        toast.error(`Error: ${err.message}`);
+      .catch((err:AxiosError< {message:string} > ) => {
+        toast.error(err.response?.data.message);
       });
   };
 

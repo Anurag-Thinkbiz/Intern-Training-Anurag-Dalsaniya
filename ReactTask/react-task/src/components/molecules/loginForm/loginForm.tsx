@@ -12,8 +12,9 @@ const LoginFormMolecule = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, touchedFields, isSubmitting, isLoading },
+    formState: { errors, isSubmitting, isLoading },
     reset,
+    trigger
   } = useForm<loginDataType>({
     resolver: joiResolver(loginSchema),
   });
@@ -22,6 +23,7 @@ const LoginFormMolecule = () => {
     authUser(data);
     reset();
   };
+  let isValid=false;
   const isFormSubmitting = isSubmitting || isLoading;
   return (
     <FormStyle onSubmit={handleSubmit(onSubmit)}>
@@ -32,11 +34,12 @@ const LoginFormMolecule = () => {
           labelText={t("email")}
           htmlForLabel="email"
           placeholder={t("enter your email")}
-         
           registerProps={register("email")}
-        
+          onBlur={async () => {
+            isValid = await trigger("email");
+          }}
         />
-        {touchedFields.email && <p>{errors.email?.message}</p>}
+        {!isValid && <p>{errors.email?.message}</p>}
       </div>
       <div>
         <Input
@@ -45,11 +48,12 @@ const LoginFormMolecule = () => {
           labelText={t("password")}
           htmlForLabel="password"
           placeholder={t("enter your password")}
-         
           registerProps={register("password")}
-         
+          onBlur={async () => {
+            isValid = await trigger("password");
+          }}
         />
-         {touchedFields.password && <p>{errors.password?.message}</p>}
+        {!isValid && <p>{errors.password?.message}</p>}
       </div>
       {isFormSubmitting ? (
         <p>loading...</p>

@@ -12,10 +12,9 @@ export const schema = Joi.object({
     )
     .messages({
       "any.required": "password is required",
-      "string.pattern.base": "enter a valid password formate",
+      "string.pattern.base": "password must in formate example:!e5uf^VcFPR",
       "string.max": "password must be less than 16 characters",
       "string.min": "password must be greater than 6 characters",
-      "any.pattern": "password must in formate",
     }),
   email: Joi.string()
     .email({ tlds: { allow: false } })
@@ -44,7 +43,7 @@ export const loginSchema = Joi.object({
     )
     .messages({
       "any.required": "password is required",
-      "string.password": "enter a valid password formate",
+      "string.pattern.base": "password must in formate example:!e5uf^VcFPR",
       "string.max": "password must be less than 16 characters",
       "string.min": "password must be greater than 6 characters",
     }),
