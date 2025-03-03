@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./components/pages/Home/Home";
-import RegisterPage from "./components/pages/Register/Register";
+import RegisterPage from "./components/pages/register/Register";
 import LoginPage from "./components/pages/login/Login";
 import Navbar from "./components/organisms/navbar/Navbar";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NotFound from "./components/pages/notFound/NotFound";
-import Report from "./components/templates/Report";
-import UserDetail from "./components/templates/userDetail";
+import Report from "./components/templates/ReportTemplate";
+import UserDetail from "./components/templates/userDetailTemplate";
 
 const AppRoutes = () => {
   return (

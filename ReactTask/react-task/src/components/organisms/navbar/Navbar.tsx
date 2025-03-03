@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Nav, Logo, Menu, MenuItem } from "../../styles/navbar/navbar.style";
 import { ChangeLanguageMolecules } from "../../molecules/changeLanguageMolecules/ChangeLanguageMolecules";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button } from "../../atoms/Button/Button";
+import { Button } from "../../atoms/button/Button";
 import {
   useAppDispatch,
   useAppSelector,

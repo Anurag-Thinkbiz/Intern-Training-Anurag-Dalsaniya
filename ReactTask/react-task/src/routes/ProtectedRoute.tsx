@@ -6,7 +6,6 @@ import { UserContextProvider } from "../context/userContext";
 
 const  ProtectedRoute: React.FC = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.token);
-  console.log(isAuthenticated);
   
 
   if (!isAuthenticated) {

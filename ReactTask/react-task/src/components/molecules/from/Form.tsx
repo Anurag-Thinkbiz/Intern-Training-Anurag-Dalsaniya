@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { Input } from "../../atoms/InputElement/Input";
-import { Button } from "../../atoms/Button/Button";
+import { Input } from "../../atoms/inputElement/Input";
+import { Button } from "../../atoms/button/Button";
 import {
   FormDataType,
 } from "../../../data/modal/types/formType/formType";

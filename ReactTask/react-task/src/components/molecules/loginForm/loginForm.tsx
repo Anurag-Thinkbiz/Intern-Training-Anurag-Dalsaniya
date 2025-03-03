@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "../../atoms/Button/Button";
-import { Input } from "../../atoms/InputElement/Input";
+import { Button } from "../../atoms/button/Button";
+import { Input } from "../../atoms/inputElement/Input";
 import { FormStyle } from "../../styles/formStyle/formMolecules.style";
 import { loginDataType } from "../../../data/modal/types/formType/formType";
 import { joiResolver } from "@hookform/resolvers/joi";

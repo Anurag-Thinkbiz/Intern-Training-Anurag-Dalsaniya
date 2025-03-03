@@ -12,7 +12,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logIn: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       return {
         ...state,
         token: action.payload,
