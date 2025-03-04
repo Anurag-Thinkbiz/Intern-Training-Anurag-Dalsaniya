@@ -1,0 +1,330 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "User CURD with TYPEORM",
+        "description": "This API allows administrators and authorized users to create, retrieve, update, and delete user information. It integrates authentication (JWT) to ensure secure access and enforces role-based access control (RBAC) to restrict actions based on the user role. Available roles include Admin, Manager, and User, each with specific permissions.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/"
+        }
+    ],
+    "paths": {
+        "/user/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "description": "This API allows  users to create a new user. The user must provide valid details including name, email, password, and role.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "successfully created"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login user",
+                "description": "This API allows users to authenticate themselves and obtain a JWT (JSON Web Token) for subsequent requests. The user must provide a valid email and password. If the credentials are correct, a JWT token will be issued, which can be used to authenticate and authorize the user for protected routes (such as get details ,updating or deleting user data). This token must be included in the `Authorization` header for all requests to access secure endpoints.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/loginUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful, JWT token returned",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "accessToken": "eyJhbGciOiJIUzI1NiIsIn 6IkpVCJ9.eyJpZCI6Ijc0NzEzZTg2LTY0ZTAtNDZkYy04OWI1LTljNDJiYjQyZDg4NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzM4OTk1MjI4fQ.KdiERavRvIZ4kmVkoFN98FwVFoDC-z1EgcssR3uoGUQ"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid credentials (incorrect email or password)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/user/details": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user details",
+                "description": "This API allows authenticated users to retrieve their details. The request must include a valid JWT token in the `Authorization` header, and the server will verify the token before allowing access to the user information. Optionally, you can pass a query parameter `isAdmin` to filter based on user role.",
+                "parameters": [
+                    {
+                        "name": "isAdmin",
+                        "in": "query",
+                        "description": "A boolean value indicating if the user is an admin. Defaults to false if not provided.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details fetched successfully",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "user_id": "74713e86-64e0-46dc-89b5-9c42bb42d884",
+                                        "user_name": "  John",
+                                        "user_email": "dishant@gmail.com",
+                                        "user_password": "JohnDoe123",
+                                        "user_role": "user",
+                                        "user_address": "india 360530"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Missing or invalid JWT token"
+                    },
+                    "403": {
+                        "description": "Forbidden - User does not have permission to access this resource"
+                    },
+                    "500": {
+                        "description": "Internal server error - Something went wrong on the server"
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user details",
+                "description": "This API allows authenticated users to update their details. The request must include a valid JWT token in the `Authorization` header, and the server will verify the token before allowing access to modify the user information. Users can update fields like `name`, `address`, and `password`.",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "63228b18-f5be-4dbf-80a3-b27cb4fbdb"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "JohnDoe12"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "india, 360530"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User details updated successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "successfully updated"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid input data"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Missing or invalid JWT token"
+                    },
+                    "403": {
+                        "description": "Forbidden - User does not have permission to access user"
+                    },
+                    "404": {
+                        "description": "Not Found - User does not exist"
+                    },
+                    "500": {
+                        "description": "Internal server error - Something went wrong on the server"
+                    }
+                }
+            }
+        },
+        "/user/delete": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete user",
+                "description": "This API allows an admin to delete any user's account, but a regular user can only delete their own account. The request must include a valid JWT token in the `Authorization` header. The server will verify the token and check if the authenticated user has the necessary permissions.",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "delete user id",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "09f54bce-39ab-49ae-aa8e-9d58c94e3b"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "User account successfully deleted"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid ID format"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Missing or invalid JWT token"
+                    },
+                    "403": {
+                        "description": "Forbidden - User does not have permission to delete this user"
+                    },
+                    "404": {
+                        "description": "Not Found - User does not exist"
+                    },
+                    "500": {
+                        "description": "Internal server error - Something went wrong on the server"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "createUser": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "JohnDoe123@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "JohnDoe123"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "user"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "india, 360530"
+                    }
+                },
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "role"
+                ]
+            },
+            "loginUser": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "JohnDoe123@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "JohnDoe123@"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    }
+}
