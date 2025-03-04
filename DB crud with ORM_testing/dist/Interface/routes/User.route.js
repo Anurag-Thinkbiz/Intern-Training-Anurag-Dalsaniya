@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const User_validation_1 = require("../../Domain/Schemas/User.validation");
+const Validation_1 = require("../../Infrastructure/helpers/Validation");
+const Delete_validation_1 = require("../../Domain/Schemas/Delete.validation");
+const Login_validation_1 = require("../../Domain/Schemas/Login.validation");
+const Update_validation_1 = require("../../Domain/Schemas/Update.validation");
+const user_controller_1 = require("../controllers/user.controller");
+const login_controller_1 = require("../controllers/login.controller");
+const delete_controller_1 = require("../controllers/delete.controller");
+const update_controller_1 = require("../controllers/update.controller");
+const getUser_controller_1 = require("../controllers/getUser.controller");
+const Middleware_1 = require("../../Infrastructure/helpers/middleware/Middleware");
+const user_Repository_ts_1 = require("../../Infrastructure/repositories/user.Repository.ts");
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
+router.post("/register", (0, Validation_1.SchemaValidation)(User_validation_1.RegisterValidationSchema), (0, user_controller_1.userCreateController)(user_Repository_ts_1.UserRepository));
+router.post("/login", (0, Validation_1.SchemaValidation)(Login_validation_1.LoginValidationSchema), (0, login_controller_1.loginUserController)(user_Repository_ts_1.UserRepository));
+router.get("/details", Middleware_1.authUserWithToken, (0, getUser_controller_1.getUserDetailController)(user_Repository_ts_1.UserRepository));
+router.patch("/update", Middleware_1.authUserWithToken, (0, Validation_1.SchemaValidation)(Update_validation_1.UpdateValidationSchema), (0, update_controller_1.updateUserController)(user_Repository_ts_1.UserRepository));
+router.delete("/delete", Middleware_1.authUserWithToken, (0, Validation_1.SchemaValidation)(Delete_validation_1.DeleteValidationSchema), (0, delete_controller_1.deleteUserController)(user_Repository_ts_1.UserRepository));
+exports.default = router;

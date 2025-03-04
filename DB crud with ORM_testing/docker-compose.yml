@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0  
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: NewPassword123!
+      MYSQL_DATABASE: user
+    ports:
+      - "3307:3306"  
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    container_name: backend
+    build: 
+      context: ./
+    volumes:
+      - .:/app
+    ports:
+      - "7000:7000"
+    depends_on:
+      - mysqldb
+    environment:
+      HOST: mysqldb
+      USER: root
+      PASSWORD: NewPassword123!
+      NAME: user
+    command: ["npm","start"]
+volumes:
+  db_data:
