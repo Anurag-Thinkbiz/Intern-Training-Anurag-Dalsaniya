@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDetail Component renders correctly when user is logged in (snapshot test) 1`] = `
+<div>
+  <div
+    data-testid="outlet"
+  />
+  <h5>
+    hello
+     
+    <span>
+       
+      John Doe
+    </span>
+  </h5>
+  <h5>
+    email
+     
+    <span>
+      john@example.com
+    </span>
+  </h5>
+  <h5>
+    role
+     
+    <span>
+      admin
+    </span>
+  </h5>
+</div>
+`;
+
+exports[`UserDetail Component renders correctly when user is not logged in (snapshot test) 1`] = `
+<div>
+  <div
+    data-testid="outlet"
+  />
+  <h1>
+    greeting
+  </h1>
+  <h1>
+    newGreeting
+  </h1>
+</div>
+`;
